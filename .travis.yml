@@ -1,0 +1,11 @@
+language: dart
+
+dart_task:
+  - test
+  - dartfmt
+  - dartanalyzer: --fatal-warnings lib test
+
+jobs:
+  include:
+    - stage: coverage
+      script: bash coverage.sh
