@@ -230,7 +230,7 @@ class MaterialWeekdaySelectorFormField extends FormField<List<bool>> {
     FormFieldSetter<List<bool>> onSaved,
     FormFieldValidator<List<bool>> validator,
     List<bool> initialValue,
-    List<String> narrowWeekdays,
+    List<String> shortWeekdays,
     List<String> weekdays,
     bool autovalidate = false,
   }) : super(
@@ -243,7 +243,7 @@ class MaterialWeekdaySelectorFormField extends FormField<List<bool>> {
       return Column(
         children: <Widget>[
           MaterialWeekdaySelector(
-            narrowWeekdays: narrowWeekdays,
+            shortWeekdays: shortWeekdays,
             weekdays: weekdays,
             onChanged: (index) {
               final i = index % 7;
@@ -274,7 +274,7 @@ class MaterialWeekdaySelector extends StatefulWidget {
     Key key,
     @required this.onChanged,
     @required this.values,
-    this.narrowWeekdays = _weekdayVeryShortNames,
+    this.shortWeekdays = _weekdayVeryShortNames,
     this.weekdays = _weekdayTooltips,
     this.enableFeedback,
     this.color,
@@ -299,14 +299,14 @@ class MaterialWeekdaySelector extends StatefulWidget {
     this.selectedShape,
     this.disabledShape,
   })  : assert(values != null),
-        assert(narrowWeekdays == null || narrowWeekdays.length == 7),
+        assert(shortWeekdays == null || shortWeekdays.length == 7),
         assert(weekdays == null || weekdays.length == 7),
         super(key: key);
 
   /// Very short names for days of the week, starting with Sunday, e.g. 'S'.
   ///
   /// If omitted, English is used.
-  final List<String> narrowWeekdays;
+  final List<String> shortWeekdays;
 
   /// The days of the week, starting with Sunday, e.g. 'Sunday'.
   ///
@@ -442,7 +442,7 @@ class _MaterialWeekdaySelectorState extends State<MaterialWeekdaySelector> {
   Widget buildButtonWith(int value) {
     final v = value % 7;
     return MaterialWeekdayButton(
-      text: widget.narrowWeekdays[v],
+      text: widget.shortWeekdays[v],
       selected: widget.values[v],
       tooltip: widget.weekdays[v],
       onPressed: () => widget.onChanged(value),
