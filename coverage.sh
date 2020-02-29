@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
+flutter test --coverage
+genhtml coverage/lcov.info -o coverage/html
 
-pub global activate test_coverage
-
-pub global run test_coverage
-
-bash <(curl -s https://codecov.io/bash)
+echo 'Run the following command to open the coverage report in your browser'
+echo '> open coverage/html/index.html'

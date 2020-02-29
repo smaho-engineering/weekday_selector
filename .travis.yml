@@ -8,4 +8,4 @@ dart_task:
 jobs:
   include:
     - stage: coverage
-      script: bash coverage.sh
+      script: bash codecovio.sh

@@ -1,4 +1,4 @@
-# weekday_selector
+# `weekday_selector`
 
 > A collection of Flutter widgets and classes to help you select weekdays in your apps. Perfect for recurring events, alarms.
 
@@ -19,13 +19,70 @@
 
 ## Usage
 
-COMING SOON!
+You can find the best examples in the [`example`](https://github.com/smaho-engineering/weekday_selector/blob/master/example/lib/main.dart) project on GitHub. We also give a couple of examples in this `README`.
 
-This package is in its early days, but hopefully it will get to a stage where it's a delight to use.
+### Basic usage
 
-## Development
+1. Add the package as dependency. Open your project's `pubspec.yaml` file and write:
 
-* **`dartfmt -w .`** - Format code with [`dartfmt`](https://dart.dev/tools/dartfmt)
-* **`pub run test`** -  Run all tests using the [`test`](https://pub.dev/packages/test) package
-* **`dartanalyzer lib test`** - Run the analyzer on the `lib` and `test` folders
-* **`bash coverage.sh`** - Get coverage info
+    ```yaml
+   # your pubspec.yaml file
+   name: your_app
+   dependencies:
+     # Look up the version at: https://pub.dev/packages/weekday_selector#-installing-tab-
+     weekday_selector: ^0.0.0 # TODO: Change version
+   ```
+   
+2. Install the package by executing `flutter pub get` or use your IDE to install it for you.
+3. Import the package and use it!
+
+    ```dart
+    import 'package:weekday_selector/weekday_selector.dart';
+    
+    // Somewhere in your build method...
+    MaterialWeekdaySelector(
+      // Don't change anything for now, just print the index of the day
+      // that should be changed. Use % 7
+      onChanged: print,
+      // Example: weekends are selected
+      values: [
+        true, // Sunday
+        false, // Monday
+        false, // Tuesday
+        false, // Wednesday
+        false, // Thursday
+        false, // Friday
+        true, // Saturday
+      ],
+    ),
+    ```
+   
+## `MaterialWeekdaySelector`
+
+* requires a material app as parent
+
+https://api.dart.dev/stable/2.7.1/dart-core/DateTime/weekday.html
+
+### Internationalization/Localization (i18n, l10n)
+
+Use the `narrowWeekdays` and `weekdays` named parameters to customize the letters on the buttons and their tooltips.
+The tooltips are visible when the user long-presses a button. If omitted, English is used.
+
+If you plan to use other languages in your application, I recommend you to use the [`intl` package](https://pub.dev/packages/intl).
+
+ 
+
+## Contribute
+
+In case something does not work as expected, or you are not sure how to solve a problem, open an issue on GitHub.
+We are looking forward to your contributions: open an issue, clarify the documentation, clean up the code, or fix a bug!
+Thank you for your help!
+
+### Development
+
+Here are a couple of useful commands that you should know if you want to work on the library itself (as opposed to just using it as a dependency).
+
+* **`flutter format .`** - Format code
+* **`flutter test`** - Run all tests
+* **`flutter analyze`** - Run the analyzer on the `lib` and `test` folders
+* **`bash coverage.sh`** - Run tests, collect coverage and generate HTML report

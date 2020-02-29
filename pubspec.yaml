@@ -13,4 +13,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  # We want to include the package in the tests so that users can understand
+  # how the intl package and the weekday selector package work together.
+  # The package is also used in the unit tests.
+  intl: ^0.16.1
 flutter:
