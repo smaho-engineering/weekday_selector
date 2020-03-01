@@ -1,3 +1,7 @@
+## 0.1.2
+
+Improve READMEs, documentation and the example project.
+
 ## 0.1.1
 
 ### `WeekdaySelector` widget
