@@ -38,6 +38,8 @@ const defaultShortWeekdays = <String>[
 /// WTF of the day: 0 corresponds to Monday in the intl library.
 const defaultFirstDayOfWeek = 1;
 
+const defaultTextDirection = TextDirection.ltr;
+
 /// Weekday selector
 class WeekdaySelector extends StatefulWidget {
   // TODO: idea: f onChanged is null, display items as unmodifiable???
@@ -48,6 +50,7 @@ class WeekdaySelector extends StatefulWidget {
     this.shortWeekdays = defaultShortWeekdays,
     this.weekdays = defaultWeekdays,
     this.firstDayOfWeek = defaultFirstDayOfWeek,
+    this.textDirection = defaultTextDirection,
     this.enableFeedback,
     this.color,
     this.selectedColor,
@@ -103,9 +106,8 @@ class WeekdaySelector extends StatefulWidget {
   /// If omitted, [defaultWeekdays] is used (en_ISO).
   final int firstDayOfWeek;
 
-  // TODO: colors: if color is set, use fill colors automatically, if they are omitted
-  // TODO: add assertions: only one of those should be set.
-  // TODO: describe default colors
+  /// The text direction to be used when creating the day buttons.
+  final TextDirection textDirection;
 
   /// The corresponding selection state of each day.
   ///
@@ -268,6 +270,7 @@ class _WeekdaySelectorState extends State<WeekdaySelector> {
   Widget build(BuildContext context) {
     const days = [0, 1, 2, 3, 4, 5, 6];
     return Row(
+      textDirection: widget.textDirection,
       children: days
           .map((i) => i + widget.firstDayOfWeek)
           .map(buildButtonWith)
