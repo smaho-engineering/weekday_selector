@@ -4,11 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/date_symbols.dart';
-import 'package:intl/intl.dart' hide TextDirection;
 import 'package:weekday_selector/weekday_selector.dart';
 
 void main() async {
-//  await initializeDateFormatting('de');
   runApp(MyApp());
 }
 
@@ -19,23 +17,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   List<Locale> locales = [];
-
-  @override
-  void initState() {
-    // In the example app, we want to mark every locale that the `intl` package
-    // support as supported so that you can test the weekday selector quickly,
-    // so we just convert intl symbols to locales, but in your app, it is
-    // very likely that you would want something else.
-    // Learn more about internationalization here:
-    // https://flutter.dev/docs/development/accessibility-and-localization/internationalization
-    locales = dateTimeSymbolMap()
-        .keys
-        .cast<String>()
-        .map((String k) => Locale(
-            k.split('_')[0], k.split('_').length > 1 ? k.split('_')[1] : null))
-        .toList();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +72,23 @@ class _MyAppState extends State<MyApp> {
         GlobalWidgetsLocalizations.delegate,
       ],
     );
+  }
+
+  @override
+  void initState() {
+    // In the example app, we want to mark every locale that the `intl` package
+    // support as supported so that you can test the weekday selector quickly,
+    // so we just convert intl symbols to locales, but in your app, it is
+    // very likely that you would want something else.
+    // Learn more about internationalization here:
+    // https://flutter.dev/docs/development/accessibility-and-localization/internationalization
+    locales = dateTimeSymbolMap()
+        .keys
+        .cast<String>()
+        .map((String k) => Locale(
+        k.split('_')[0], k.split('_').length > 1 ? k.split('_')[1] : null))
+        .toList();
+    super.initState();
   }
 
   final pageController = PageController(initialPage: 0, keepPage: true);
@@ -589,7 +587,14 @@ const valuesSaturdaySunday = <bool>[
   true,
 ];
 
-class SaneDefaultThemeExample extends StatelessWidget {
+class SaneDefaultThemeExample extends StatefulWidget {
+  @override
+  _SaneDefaultThemeExampleState createState() => _SaneDefaultThemeExampleState();
+}
+
+class _SaneDefaultThemeExampleState extends State<SaneDefaultThemeExample> {
+  final values = <bool>[null, null, true, true, false, false, true];
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -601,8 +606,13 @@ class SaneDefaultThemeExample extends StatelessWidget {
         Text(
             'Notice how the colors of the picked days will match the material theme of your app!'),
         WeekdaySelector(
-          onChanged: printIntAsDay,
-          values: [null, null, true, true, false, false, true],
+          onChanged: (v) {
+            printIntAsDay(v);
+            setState(() {
+              values[v % 7] = !values[v % 7];
+            });
+          },
+          values: values,
         ),
       ],
     );
