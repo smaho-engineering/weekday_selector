@@ -1,3 +1,7 @@
+## 0.2.0
+
+`WeekdaySelector`, `WeekdaySelectorTheme` should be ready to use and the README is also not so terrible anymore :)
+
 ## 0.1.2
 
 Improve READMEs, documentation and the example project.

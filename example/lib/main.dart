@@ -86,7 +86,7 @@ class _MyAppState extends State<MyApp> {
         .keys
         .cast<String>()
         .map((String k) => Locale(
-        k.split('_')[0], k.split('_').length > 1 ? k.split('_')[1] : null))
+            k.split('_')[0], k.split('_').length > 1 ? k.split('_')[1] : null))
         .toList();
     super.initState();
   }
@@ -409,7 +409,8 @@ class _CurrentLocaleExampleState extends State<CurrentLocaleExample> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        ExampleTitle('Current locale: $locale (${textDirection == TextDirection.rtl ? "RTL" : "LTR"})'),
+        ExampleTitle(
+            'Current locale: $locale (${textDirection == TextDirection.rtl ? "RTL" : "LTR"})'),
         Text(
             'The WeekdaySelector is built to support multiple languages, locales in one application.'),
         Text(
@@ -442,7 +443,9 @@ TextDirection getTextDirection(Locale locale) {
   // See GlobalWidgetsLocalizations
   // TODO: there must be a better way to figure out whether a locale is RTL or LTR
   const rtlLanguages = ['ar', 'fa', 'he', 'ps', 'sd', 'ur'];
-  return rtlLanguages.contains(locale.languageCode) ? TextDirection.rtl : TextDirection.ltr;
+  return rtlLanguages.contains(locale.languageCode)
+      ? TextDirection.rtl
+      : TextDirection.ltr;
 }
 
 class FirstDayOfWeekDateTime extends StatelessWidget {
@@ -589,7 +592,8 @@ const valuesSaturdaySunday = <bool>[
 
 class SaneDefaultThemeExample extends StatefulWidget {
   @override
-  _SaneDefaultThemeExampleState createState() => _SaneDefaultThemeExampleState();
+  _SaneDefaultThemeExampleState createState() =>
+      _SaneDefaultThemeExampleState();
 }
 
 class _SaneDefaultThemeExampleState extends State<SaneDefaultThemeExample> {

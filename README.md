@@ -21,19 +21,75 @@
 
 ## Usage
 
-You can find the best examples in the [`example`](https://github.com/smaho-engineering/weekday_selector/blob/master/example/lib/main.dart) project on GitHub. We also give a couple of examples in this `README`.
+### Example app
 
-COMING SOON... LIKE IN 30 MINUTES :)
+We maintain a very detailed example app in our repository. You can find the best examples in the [`example` folder](https://github.com/smaho-engineering/weekday_selector/blob/master/example/lib/main.dart) on GitHub.
 
-### Internationalization/Localization (i18n, l10n)
+If you find any issues with the example app, please get in touch, we will figure out together how to make it better!
 
-Use the `narrowWeekdays` and `weekdays` named parameters to customize the letters on the buttons and their tooltips.
-The tooltips are visible when the user long-presses a button. If omitted, English is used.
+### Basic usage
 
-If you plan to use other languages in your application, I recommend you to use the [`intl` package](https://pub.dev/packages/intl).
+When calling the `WeekdaySelector`, pass a `List<bool>` as the `values` parameter. The `values` list may contain `null`s, in that case the day will be disabled.
+
+Implement the `onChanged` callback, if you want to handle user interaction. Your `onChanged` callback will receive `int` integers matching the [`DateTime.monday == 1`](https://api.dart.dev/stable/2.6.1/dart-core/DateTime/monday-constant.html), ..., [`DateTime.sunday == 7`](https://api.dart.dev/stable/latest/dart-core/DateTime/sunday-constant.html) values. 
+
+Typical usage with stateful widget:
+
+```dart
+class ExampleState extends State<ExampleWidget> {
+  // We start with all days selected
+  final values = List.filled(7, true);
+
+  @override
+  Widget build(BuildContext context) {
+    return WeekdaySelector(
+      onChanged: (v) {
+        setState(() {
+          values[v % 7] = !values[v % 7];
+          // Use % 7 as Sunday's index in the array is 0
+          // but DateTime.sunday == 7.
+        });
+      },
+      values: values,
+    );
+  }
+}
+```
+
+### Customization
+
+The [`WeekdaySelector`](https://pub.dev/documentation/weekday_selector/latest/weekday_selector/WeekdaySelector-class.html) class accepts many customization options: you can tweak the fill colors, text style, shape of the days, elevation, and more.
+
+In case you don't provide any of these values, the library will do its best to figure out a style that matches your material app's theme.
+
+If you want to control multiple selectors' appearance, take a look at the [`WeekdaySelectorTheme`](https://pub.dev/documentation/weekday_selector/latest/weekday_selector/WeekdaySelectorTheme-class.html) widget.
+
+### Internationalization
+
+We aim to provide you with a widget that supports all languages.
+The `WeekdaySelector` accepts custom texts (`shortWeekdays`) and tooltips (`weekdays`),
+the first day of the week (`firstDayOfWeek`), and text direction RTL-LTR (`textDirection`).
+
+In case these parameters are omitted, English ("en ISO") will be used.
+
+We recommend you check out the [`intl`](https://pub.dev/packages/intl) package's [`DateSymbols`](https://pub.dev/documentation/intl/latest/date_symbols/DateSymbols-class.html) class.
+
+Please keep in mind that the `intl` package uses `0` value as `FIRSTDAYOFWEEK` value for locales that start with Monday, whereas `DateTime.monday` is equal to `1`. We decided to use the Dart core library's convention, so if you use the `intl` library to decide which day should the week start with, add `+1`. See [`dart-lang #265` ](https://github.com/dart-lang/intl/issues/265)
+
+```dart
+WeekdaySelector(
+  // intl package uses 0 for Monday, but DateTime uses 1 for Monday,
+  // so we need to make sure the values match
+  firstDayOfWeek: dateSymbols.FIRSTDAYOFWEEK + 1,
+),
+```
 
 <img src="https://github.com/smaho-engineering/weekday_selector/blob/master/example/assets/intl.gif?raw=true" alt="GIF Flutter plugin weekday_selector - Example app in action: Internationalization" height="600"/>
  
+## Coming soon
+
+I'm currently working on a form widget wrapper around the weekday selector so it's easier to use within forms and validate.
+
 ## Contribute
 
 In case something does not work as expected, or you are not sure how to solve a problem, open an issue on GitHub.
