@@ -6,9 +6,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/date_symbols.dart';
 import 'package:weekday_selector/weekday_selector.dart';
 
-void main() async {
-  runApp(MyApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
   @override
@@ -169,6 +167,7 @@ class StylesExamples extends StatelessWidget {
 class FormsExamples extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // No forms supprt yet, but it would come here.
     final examples = <Widget>[];
     return ListView.separated(
       padding: EdgeInsets.all(12),
@@ -220,7 +219,7 @@ class ExampleTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Text(title, style: Theme.of(context).textTheme.title),
+      child: Text(title, style: Theme.of(context).textTheme.headline6),
     );
   }
 }
@@ -396,7 +395,16 @@ class CurrentLocaleExample extends StatefulWidget {
 }
 
 class _CurrentLocaleExampleState extends State<CurrentLocaleExample> {
-  final values = <bool>[true, true, true, false, false, false, null];
+  final values = <bool>[
+    true,
+    true,
+    true,
+    false,
+    false,
+    false,
+    null,
+  ];
+
   @override
   Widget build(BuildContext context) {
     // TODO: This example should be simpler!
@@ -585,7 +593,11 @@ const valuesSaturdaySunday = <bool>[
   // Sunday
   true,
   // Monday-Friday
-  ...[false, false, false, false, false],
+  false,
+  false,
+  false,
+  false,
+  false,
   // Saturday
   true,
 ];

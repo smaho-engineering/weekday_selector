@@ -19,10 +19,10 @@ import 'package:flutter/widgets.dart';
 /// The [WeekdaySelectorThemeData] here is inspired by theme data
 /// classes in Flutter, for example [ToggleButtonsThemeData],
 /// [TooltipThemeData].
-class WeekdaySelectorThemeData extends Diagnosticable {
+class WeekdaySelectorThemeData with Diagnosticable {
   /// Creates the set of attributes used to configure the appearance of
   /// [MaterialWeekdayButton] widgets.
-  const WeekdaySelectorThemeData({
+  WeekdaySelectorThemeData({
     this.enableFeedback,
     this.color,
     this.selectedColor,

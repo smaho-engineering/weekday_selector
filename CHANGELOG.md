@@ -1,3 +1,11 @@
+## 0.2.1
+
+Fix issue with `WeekdaySelectorTheme`. The build error was: "The superclass, 'Diagnosticable', has no unnamed constructor that takes no arguments."
+
+Link Vince's talk about the package: YouTube video and slides.
+
+Moaaar README improvements.
+
 ## 0.2.0
 
 `WeekdaySelector`, `WeekdaySelectorTheme` should be ready to use and the README is also not so terrible anymore :)
