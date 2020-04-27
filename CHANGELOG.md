@@ -1,3 +1,7 @@
+## 0.3.0
+
+Add `displayedDays` argument.
+
 ## 0.2.2
 
 Revert `Diagnoticable` and text theme changes.

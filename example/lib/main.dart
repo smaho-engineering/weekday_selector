@@ -115,6 +115,7 @@ class UsageExamples extends StatelessWidget {
       SimpleExampleWeekendsStatic(),
       SelectedDaysUpdateExample(),
       DisabledExample(),
+      DisplayedDaysExample(),
       // TODO: use with setstate
     ];
     return ListView.separated(
@@ -332,6 +333,53 @@ class _SelectedDaysUpdateExampleState extends State<SelectedDaysUpdateExample> {
             'The days that are currently selected are: ${valuesToEnglishDays(values, true)}.'),
         WeekdaySelector(
           selectedFillColor: Colors.indigo,
+          onChanged: (v) {
+            printIntAsDay(v);
+            setState(() {
+              values[v % 7] = !values[v % 7];
+            });
+          },
+          values: values,
+        ),
+      ],
+    );
+  }
+}
+
+class DisplayedDaysExample extends StatefulWidget {
+  @override
+  _DisplayedDaysExampleState createState() => _DisplayedDaysExampleState();
+}
+
+class _DisplayedDaysExampleState extends State<DisplayedDaysExample> {
+  final values = List.filled(7, false);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        ExampleTitle('Displayed days'),
+        Text(
+          'You can select which days you want to display to your users. '
+          'Though this makes the weekday selector more difficult to understand, '
+          'for some use-cases, it can be a good option to consider: if your app '
+          'lets teachers select weekdays, then maybe you do not need to display '
+          'the days of the weekend?',
+        ),
+        Text(
+          'The days that are currently selected are: '
+          '${valuesToEnglishDays(values, true)}.',
+        ),
+        WeekdaySelector(
+          // Just some days you want to display to your users.
+          displayedDays: {
+            DateTime.tuesday,
+            DateTime.wednesday,
+            DateTime.thursday,
+            DateTime.friday,
+            DateTime.saturday,
+          },
           onChanged: (v) {
             printIntAsDay(v);
             setState(() {

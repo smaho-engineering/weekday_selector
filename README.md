@@ -21,19 +21,18 @@
 
 ## Usage
 
+### Example app
+
+You'll find the best examples in the package's `/example` folder on [GitHub](https://github.com/smaho-engineering/weekday_selector/blob/master/example/lib/main.dart).
+There, you'll see examples for basic usage, style customization, and internationalization.
+
 ### Basic usage
 
-When creating a `WeekdaySelector` widget, pass a `List<bool>` of length 7 as the `values` parameter. `values[0]` is Sunday, `values[1]` for Monday, and so on.
-The `values` list may also contain `null`s, in that case the day will be disabled.
-
-Implement the `onChanged` callback, if you want to handle user interaction.
-The `onChanged` callback will be called with the `int` integers matching the `DateTime` day constants: [`DateTime.monday == 1`](https://api.dart.dev/stable/2.6.1/dart-core/DateTime/monday-constant.html), ..., [`DateTime.sunday == 7`](https://api.dart.dev/stable/latest/dart-core/DateTime/sunday-constant.html). 
-
-The `WeekdaySelector` works well with any state management solution. This is how the typical usage with as simple stateful widget looks like:
+The `WeekdaySelector` works well with any state management solution. This is how the typical usage with a simple stateful widget looks like:
 
 ```dart
 class ExampleState extends State<ExampleWidget> {
-  // We start with all days selected
+  // We start with all days selected.
   final values = List.filled(7, true);
 
   @override
@@ -41,9 +40,13 @@ class ExampleState extends State<ExampleWidget> {
     return WeekdaySelector(
       onChanged: (int day) {
         setState(() {
-          // Use module % 7 as Sunday's index in the array is 0 but DateTime.sunday constant integer value is 7.
+          // Use module % 7 as Sunday's index in the array is 0 and
+          // DateTime.sunday constant integer value is 7.
           final index = day % 7;
-          // We flip the value in this example. 
+          // We "flip" the value in this example, but you may also
+          // perform validation, a DB write, an HTTP call or anything
+          // else before you actually flip the value,
+          // it's up to your app's needs.
           values[index] = !values[index];
         });
       },
@@ -53,13 +56,25 @@ class ExampleState extends State<ExampleWidget> {
 }
 ```
 
+When creating a `WeekdaySelector` widget, pass a `List<bool>` of length 7 as the `values` parameter.
+`values[0]` is Sunday, `values[1]` for Monday, and so on.
+The `values` list may also contain `null`s, in that case the day will be disabled.
+
+Implement the `onChanged` callback, if you want to handle user interaction.
+The `onChanged` callback will be called with the `int` integers matching the `DateTime` day constants: [`DateTime.monday == 1`](https://api.dart.dev/stable/2.6.1/dart-core/DateTime/monday-constant.html), ..., [`DateTime.sunday == 7`](https://api.dart.dev/stable/latest/dart-core/DateTime/sunday-constant.html):
+if the user taps on Wednesday, the `onChanged` callback will be called with `3`.
+
 ### Customization
 
-The [`WeekdaySelector`](https://pub.dev/documentation/weekday_selector/latest/weekday_selector/WeekdaySelector-class.html) class accepts many customization options: you can tweak the fill colors, text style, shape of the days, elevation, and more.
+The [`WeekdaySelector`](https://pub.dev/documentation/weekday_selector/latest/weekday_selector/WeekdaySelector-class.html) class accepts many customization options: you can tweak the fill colors, text style, shape of the days, elevation, and more. In case you don't provide any of these values, the library will do its best to figure out a style that matches your material app's theme.
 
-In case you don't provide any of these values, the library will do its best to figure out a style that matches your material app's theme.
+To see the list of all supported arguments, check out the [API reference](https://pub.dev/documentation/weekday_selector/latest/weekday_selector/WeekdaySelector/WeekdaySelector.html)
 
-If you want to control multiple selectors' appearance, take a look at the [`WeekdaySelectorTheme`](https://pub.dev/documentation/weekday_selector/latest/weekday_selector/WeekdaySelectorTheme-class.html) widget. It works exactly as you would expect: the descendant weekday widgets will use the theme's attributes. Arguments passed directly to the widgets override the values inherited from the theme.
+#### Theme support
+
+If you want to control multiple selectors' appearance, take a look at the [`WeekdaySelectorTheme`](https://pub.dev/documentation/weekday_selector/latest/weekday_selector/WeekdaySelectorTheme-class.html) widget.
+
+It works exactly like other theme widgets: the descendant weekday widgets will use the theme's attributes. Arguments passed directly to the widgets override the values inherited from the theme.
 
 ### Internationalization
 
