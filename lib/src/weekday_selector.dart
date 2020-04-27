@@ -34,8 +34,6 @@ const defaultShortWeekdays = <String>[
 ///
 /// The default value corresponds to the value of
 /// dateTimeSymbolMap()['en_ISO].FIRSTDAYOFWEEK + 1.
-///
-/// WTF of the day: 0 corresponds to Monday in the intl library.
 const defaultFirstDayOfWeek = 1;
 
 const defaultTextDirection = TextDirection.ltr;
@@ -44,7 +42,6 @@ const defaultTextDirection = TextDirection.ltr;
 ///
 /// Requires one of its ancestors to be a [Material] widget.
 class WeekdaySelector extends StatefulWidget {
-  // TODO: idea: f onChanged is null, display items as unmodifiable???
   WeekdaySelector({
     Key key,
     @required this.onChanged,
@@ -105,7 +102,8 @@ class WeekdaySelector extends StatefulWidget {
 
   /// The first day of the week, in ISO 8601 style, where the first day of the
   /// week, i.e. index 0, is Monday.
-  /// If omitted, [defaultWeekdays] is used (en_ISO).
+  ///
+  /// If omitted, [defaultFirstDayOfWeek] is used (en_ISO).
   final int firstDayOfWeek;
 
   /// The text direction to be used when creating the day buttons.
@@ -113,15 +111,24 @@ class WeekdaySelector extends StatefulWidget {
 
   /// The corresponding selection state of each day.
   ///
-  /// Each value in this set represents a day, therefore every element of this
-  /// set must be one of 1, 2, 3, 4, 5, 6, 7, corresponding to the [DateTime]
-  /// day constants.
-  ///
   /// * true: selected
   /// * false: enabled but not selected
-  /// * null: disabled (TODO)
+  /// * null: disabled
   ///
-  /// For example, [values] for the weekend would be a <int>{6, 7}.
+  /// For example, for a weekend selector where the weekend values are selected
+  /// (assuming Saturday, Sunday) and weekday values are not, [values] would be:
+  ///
+  /// ```dart
+  /// values: <int>[
+  ///   true, // Sunday
+  ///   false, // Monday
+  ///   false, // Tuesday
+  ///   false, // Wednesday
+  ///   false, // Thursday
+  ///   false, // Friday
+  ///   true, // Saturday
+  /// ],
+  /// ```
   final List<bool> values;
 
   /// Whether detected gestures should provide acoustic and/or haptic feedback.
@@ -187,8 +194,13 @@ class WeekdaySelector extends StatefulWidget {
   /// The splash color for the button's [InkWell] if the day is selected.
   final Color selectedSplashColor;
 
+  /// The text style of the button's text if the day is not selected.
   final TextStyle textStyle;
+
+  /// The text style of the button's text if the day is selected.
   final TextStyle selectedTextStyle;
+
+  /// The text style of the button's text if the day is disabled.
   final TextStyle disabledTextStyle;
 
   /// The shape of the enabled day button's [Material].
@@ -202,27 +214,12 @@ class WeekdaySelector extends StatefulWidget {
 
   /// Called when the user taps on a day.
   ///
-  /// The selector passes the day value as per the [DateTime]weekday constants
+  /// The selector passes the day value as per the [DateTime] weekday constants
   /// to the callback.
   ///
-  /// The callback provided to [onChanged] should update the state of the parent
+  /// The callback provided to [onChanged] could update the state of the parent
   /// [StatefulWidget[ using the [State.setState] method (or use your favorite
-  /// state management library) so that the parent gets rebuilt, for example:
-  ///
-  /// ```dart
-  /// TODO: OUTDATED, USES SETS BUT THE LIBRARY USES ARRAYS
-  /// final days = <int>{ DateTime.monday };
-  /// MaterialWeekdaySelector(
-  ///   values: days,
-  ///   onChanged: (day) {
-  ///     if (days.contains(day) {
-  ///       days.remove(day);
-  ///     } else {
-  ///       days.add(day);
-  ///     }
-  ///   },
-  /// )
-  /// ```
+  /// state management library) so that the parent gets rebuilt.
   final ValueChanged<int> onChanged;
 
   @override
@@ -281,7 +278,13 @@ class _WeekdaySelectorState extends State<WeekdaySelector> {
   }
 }
 
+/// A single button that holds a weekday.
+///
+/// This widget is used in the [WeekdaySelector] widget,
+/// and for most use-cases, you should consider using the
+/// [WeekdaySelector] widget instead of the [WeekdayButton] widget.
 class WeekdayButton extends StatelessWidget {
+  /// Creates a [WeekdayButton] widget.
   const WeekdayButton({
     Key key,
     @required this.text,

@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:weekday_selector/weekday_selector.dart';
 
 void main() {
-  group('$WeekdaySelector constructor asserts', () {
+  group('$WeekdaySelector constructor', () {
     test('initial values must not be null', () {
       expect(
         () => WeekdaySelector(onChanged: (_) {}, values: null),
@@ -33,14 +33,17 @@ void main() {
       );
     });
 
-    test('every day in the week has an initial value', () {
+    test('values length must be 7', () {
       expect(
-        () => WeekdaySelector(onChanged: (_) {}, values: List.filled(6, false)),
+        () => WeekdaySelector(
+          onChanged: (_) {},
+          values: List.filled(6, false),
+        ),
         throwsAssertionError,
       );
     });
 
-    test('weekdays length', () {
+    test('weekdays length must be 7', () {
       expect(
         () => WeekdaySelector(
           onChanged: (_) {},
@@ -51,7 +54,7 @@ void main() {
       );
     });
 
-    test('shortWeekdays length', () {
+    test('shortWeekdays length must be 7', () {
       expect(
         () => WeekdaySelector(
           onChanged: (_) {},
@@ -62,7 +65,7 @@ void main() {
       );
     });
 
-    test('weekdays all values are strings', () {
+    test('all weekdays values must be non-null strings', () {
       expect(
         () => WeekdaySelector(
           onChanged: (_) {},
@@ -81,7 +84,7 @@ void main() {
       );
     });
 
-    test('shortWeekdays all values are strings', () {
+    test('all shortWeekdays values must be non-null strings', () {
       expect(
         () => WeekdaySelector(
           onChanged: (_) {},
@@ -93,8 +96,8 @@ void main() {
     });
   });
 
-  group('$WeekdayButton constructor asserts', () {
-    test('tooltip is set', () {
+  group('$WeekdayButton constructor', () {
+    test('tooltip must be set', () {
       expect(
         () => WeekdayButton(
           onPressed: () {},
@@ -106,7 +109,7 @@ void main() {
       );
     });
 
-    test('tooltip is not an empty string', () {
+    test('tooltip must not be empty', () {
       expect(
         () => WeekdayButton(
           onPressed: () {},
@@ -118,7 +121,7 @@ void main() {
       );
     });
 
-    test('text is set', () {
+    test('text must be set', () {
       expect(
         () => WeekdayButton(
           onPressed: () {},
@@ -130,7 +133,7 @@ void main() {
       );
     });
 
-    test('text is not an empty string', () {
+    test('text must not be empty', () {
       expect(
         () => WeekdayButton(
           onPressed: () {},
