@@ -16,9 +16,10 @@ install:
 
 before_script:
   - cd ..
-  - git clone https://github.com/flutter/flutter.git
+  - git clone --single-branch --branch stable https://github.com/flutter/flutter.git
   - export PATH=`pwd`/flutter/bin:`pwd`/flutter/bin/cache/dart-sdk/bin:$PATH
   - flutter doctor
+  - flutter channel
 
 script:
   - cd $TRAVIS_BUILD_DIR
