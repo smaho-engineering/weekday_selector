@@ -38,7 +38,21 @@ const defaultFirstDayOfWeek = 1;
 
 const defaultTextDirection = TextDirection.ltr;
 
-/// [WeekdaySelector].
+/// The days that we display if the displayedDays argument is omitted.
+///
+/// By default, we display all days.
+const defaultDisplayedDays = {
+  DateTime.monday,
+  DateTime.tuesday,
+  DateTime.wednesday,
+  DateTime.thursday,
+  DateTime.friday,
+  DateTime.saturday,
+  DateTime.sunday,
+};
+
+/// The [WeekdaySelector] displays buttons that correspond to weekdays and lets
+/// the user select some of these weekdays.
 ///
 /// Requires one of its ancestors to be a [Material] widget.
 class WeekdaySelector extends StatefulWidget {
@@ -50,6 +64,7 @@ class WeekdaySelector extends StatefulWidget {
     this.weekdays = defaultWeekdays,
     this.firstDayOfWeek = defaultFirstDayOfWeek,
     this.textDirection = defaultTextDirection,
+    this.displayedDays = defaultDisplayedDays,
     this.enableFeedback,
     this.color,
     this.selectedColor,
@@ -99,6 +114,11 @@ class WeekdaySelector extends StatefulWidget {
   /// If you want to provide strings that match your app's current locale, read
   /// the weekday_selector's README and see the `intl` package
   final List<String> weekdays;
+
+  /// Which days are rendered in the weekday selector.
+  ///
+  /// By default, all days are displayed.
+  final Set<int> displayedDays;
 
   /// The first day of the week, in ISO 8601 style, where the first day of the
   /// week, i.e. index 0, is Monday.
@@ -268,9 +288,11 @@ class _WeekdaySelectorState extends State<WeekdaySelector> {
   @override
   Widget build(BuildContext context) {
     const days = [0, 1, 2, 3, 4, 5, 6];
+    final displayedIndices = widget.displayedDays.map((e) => e % 7);
     return Row(
       textDirection: widget.textDirection,
       children: days
+          .where((d) => displayedIndices.contains(d))
           .map((i) => i + widget.firstDayOfWeek)
           .map(buildButtonWith)
           .toList(),

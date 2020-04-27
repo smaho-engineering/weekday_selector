@@ -235,6 +235,67 @@ void main() {
     );
   });
 
+  group('$WeekdaySelector with only the subset of the days displayed', () {
+    Widget widget;
+    List<int> changed;
+
+    setUp(() {
+      changed = [];
+      widget = MaterialApp(
+        home: WeekdaySelector(
+          onChanged: changed.add,
+          values: const [true, false, false, false, false, false, true],
+          firstDayOfWeek: DateTime.sunday,
+          displayedDays: {
+            DateTime.monday,
+            DateTime.wednesday,
+            DateTime.friday,
+            DateTime.sunday,
+          },
+        ),
+      );
+    });
+
+    testWidgets('displays only the buttons that corresponds to the displayed days argument', (t) async {
+      await t.pumpWidget(widget);
+      final buttons = find.byType(WeekdayButton);
+      expect(buttons, findsNWidgets(4));
+      await t.pumpWidget(widget);
+    });
+
+    testWidgets(
+      'marks days as selected based the values parameter',
+          (t) async {
+        await t.pumpWidget(widget);
+        expect(
+          find
+              .byType(WeekdayButton)
+              .evaluate()
+              .map((e) => e.widget as WeekdayButton)
+              .map((b) => b.selected)
+              .toList(),
+          [true, false, false, false],
+        );
+      },
+    );
+
+    testWidgets(
+      'displays selected weekday names as button texts starting with Monday',
+          (t) async {
+        await t.pumpWidget(widget);
+        expect(
+          find
+              .byType(WeekdayButton)
+              .evaluate()
+              .map((e) => e.widget as WeekdayButton)
+              .map((b) => b.text)
+              .toList(),
+          ['S', 'M', 'W', 'F'],
+        );
+      },
+    );
+  });
+
   group(
       '$WeekdaySelector with custom weekdays, tooltips and first day of '
       'the week from the intl package (Mexico)', () {

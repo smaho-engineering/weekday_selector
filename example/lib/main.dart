@@ -115,6 +115,7 @@ class UsageExamples extends StatelessWidget {
       SimpleExampleWeekendsStatic(),
       SelectedDaysUpdateExample(),
       DisabledExample(),
+      DisplayedDaysExample(),
       // TODO: use with setstate
     ];
     return ListView.separated(
@@ -344,6 +345,48 @@ class _SelectedDaysUpdateExampleState extends State<SelectedDaysUpdateExample> {
     );
   }
 }
+
+class DisplayedDaysExample extends StatefulWidget {
+  @override
+  _DisplayedDaysExampleState createState() => _DisplayedDaysExampleState();
+}
+
+class _DisplayedDaysExampleState extends State<DisplayedDaysExample> {
+  final values = List.filled(7, false);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        ExampleTitle('aaabbbccc'),
+        Text(
+            'aaa'),
+        // Using v == true, as some values could be null!
+        Text(
+            'The days that are currently selected are: ${valuesToEnglishDays(values, true)}.'),
+        WeekdaySelector(
+          displayedDays: {
+            DateTime.tuesday,
+            DateTime.wednesday,
+            DateTime.thursday,
+            DateTime.friday,
+            DateTime.saturday,
+          },
+          selectedFillColor: Colors.indigo,
+          onChanged: (v) {
+            printIntAsDay(v);
+            setState(() {
+              values[v % 7] = !values[v % 7];
+            });
+          },
+          values: values,
+        ),
+      ],
+    );
+  }
+}
+
 
 String valuesToEnglishDays(List<bool> values, bool searchedValue) {
   final days = <String>[];
