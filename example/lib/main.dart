@@ -359,13 +359,20 @@ class _DisplayedDaysExampleState extends State<DisplayedDaysExample> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        ExampleTitle('aaabbbccc'),
+        ExampleTitle('Displayed days'),
         Text(
-            'aaa'),
-        // Using v == true, as some values could be null!
+          'You can select which days you want to display to your users. '
+          'Though this makes the weekday selector more difficult to understand, '
+          'for some use-cases, it can be a good option to consider: if your app '
+          'lets teachers select weekdays, then maybe you do not need to display '
+          'the days of the weekend?',
+        ),
         Text(
-            'The days that are currently selected are: ${valuesToEnglishDays(values, true)}.'),
+          'The days that are currently selected are: '
+          '${valuesToEnglishDays(values, true)}.',
+        ),
         WeekdaySelector(
+          // Just some days you want to display to your users.
           displayedDays: {
             DateTime.tuesday,
             DateTime.wednesday,
@@ -373,7 +380,6 @@ class _DisplayedDaysExampleState extends State<DisplayedDaysExample> {
             DateTime.friday,
             DateTime.saturday,
           },
-          selectedFillColor: Colors.indigo,
           onChanged: (v) {
             printIntAsDay(v);
             setState(() {
@@ -386,7 +392,6 @@ class _DisplayedDaysExampleState extends State<DisplayedDaysExample> {
     );
   }
 }
-
 
 String valuesToEnglishDays(List<bool> values, bool searchedValue) {
   final days = <String>[];

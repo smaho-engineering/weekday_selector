@@ -256,7 +256,9 @@ void main() {
       );
     });
 
-    testWidgets('displays only the buttons that corresponds to the displayed days argument', (t) async {
+    testWidgets(
+        'displays only the buttons that corresponds to the displayed days argument',
+        (t) async {
       await t.pumpWidget(widget);
       final buttons = find.byType(WeekdayButton);
       expect(buttons, findsNWidgets(4));
@@ -265,7 +267,7 @@ void main() {
 
     testWidgets(
       'marks days as selected based the values parameter',
-          (t) async {
+      (t) async {
         await t.pumpWidget(widget);
         expect(
           find
@@ -281,7 +283,7 @@ void main() {
 
     testWidgets(
       'displays selected weekday names as button texts starting with Monday',
-          (t) async {
+      (t) async {
         await t.pumpWidget(widget);
         expect(
           find
