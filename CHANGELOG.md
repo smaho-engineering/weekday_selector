@@ -1,3 +1,13 @@
+## 0.2.2
+
+Revert `Diagnoticable` and text theme changes.
+
+0.2.1 was not tested with the stable channel, so some changes were made to this package only worked on the `dev` and `beta` channels, but not on `stable`.
+
+As the package aims to support the `stable` channel, those updates were reverted.
+
+The CI/CD pipeline has been also updated so that this won't occur again: we run the tests on the `stable` channel.
+
 ## 0.2.1
 
 Fix issue with `WeekdaySelectorTheme`. The build error was: "The superclass, 'Diagnosticable', has no unnamed constructor that takes no arguments."
