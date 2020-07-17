@@ -10,10 +10,10 @@ Read source code on [GitHub](https://github.com/smaho-engineering/weekday_select
 
 ### Styles
 
-<img src="https://github.com/smaho-engineering/weekday_selector/blob/master/example/assets/styles.gif?raw=true" alt="GIF Flutter plugin weekday_selector - Example app in action: Styles" height="600"/>
+<img src="https://github.com/smaho-engineering/weekday_selector/blob/83def9ba702f4d47b52b58e387a25c34962d2563/example/assets/styles.gif?raw=true" alt="GIF Flutter plugin weekday_selector - Example app in action: Styles" height="600"/>
 
 ### Internationalization
 
-<img src="https://github.com/smaho-engineering/weekday_selector/blob/master/example/assets/intl.gif?raw=true" alt="GIF Flutter plugin weekday_selector - Example app in action: Internationalization" height="600"/>
+<img src="https://github.com/smaho-engineering/weekday_selector/blob/83def9ba702f4d47b52b58e387a25c34962d2563/example/assets/intl.gif?raw=true" alt="GIF Flutter plugin weekday_selector - Example app in action: Internationalization" height="600"/>
 
 
