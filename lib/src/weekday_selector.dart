@@ -479,7 +479,7 @@ class WeekdayButton extends StatelessWidget {
           theme.buttonTheme.colorScheme.onSurface.withOpacity(0.16);
       currentTextStyle = textStyle ??
           weekdayTheme?.textStyle ??
-          theme.textTheme.body1.copyWith(color: currentColor);
+          theme.textTheme.bodyText2.copyWith(color: currentColor);
       currentShape = shape;
     } else if (onPressed != null && selected == true) {
       currentColor = selectedColor ??
@@ -502,7 +502,7 @@ class WeekdayButton extends StatelessWidget {
       currentShape = selectedShape ?? weekdayTheme?.selectedShape;
       currentTextStyle = selectedTextStyle ??
           weekdayTheme?.selectedTextStyle ??
-          theme.textTheme.body1.copyWith(color: currentColor);
+          theme.textTheme.bodyText2.copyWith(color: currentColor);
     } else {
       currentDisabledElevation =
           disabledElevation ?? weekdayTheme?.disabledElevation ?? 0;
@@ -515,7 +515,7 @@ class WeekdayButton extends StatelessWidget {
       currentShape = disabledShape ?? weekdayTheme?.disabledShape;
       currentTextStyle = disabledTextStyle ??
           weekdayTheme?.disabledTextStyle ??
-          theme.textTheme.body1.copyWith(color: currentColor);
+          theme.textTheme.bodyText2.copyWith(color: currentColor);
     }
 
     return Expanded(
