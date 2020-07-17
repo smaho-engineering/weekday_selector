@@ -1,3 +1,9 @@
+## 0.4.0
+
+Remove `DiagnosticableMixin` and use the `Diagnosticable` mixin. [`#2`](https://github.com/smaho-engineering/weekday_selector/pull/2)
+
+Remove enormous example videos from the repository, use hashed URLs. For more info, see: [`pub-dev #3849`](https://github.com/dart-lang/pub-dev/issues/3849) 
+
 ## 0.3.1
 
 Change text style themes from body1 -> bodyText2. Material updates landed in Flutter's stable channel.
