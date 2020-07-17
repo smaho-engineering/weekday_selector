@@ -1,3 +1,7 @@
+## 0.3.1
+
+Change text style themes from body1 -> bodyText2. Material updates landed in Flutter's stable channel.
+
 ## 0.3.0
 
 Add `displayedDays` argument.
