@@ -64,6 +64,34 @@ Implement the `onChanged` callback, if you want to handle user interaction.
 The `onChanged` callback will be called with the `int` integers matching the `DateTime` day constants: [`DateTime.monday == 1`](https://api.dart.dev/stable/2.6.1/dart-core/DateTime/monday-constant.html), ..., [`DateTime.sunday == 7`](https://api.dart.dev/stable/latest/dart-core/DateTime/sunday-constant.html):
 if the user taps on Wednesday, the `onChanged` callback will be called with `3`.
 
+#### Full control
+
+You have full control over how you handle user interaction and what you set the weekday selectors state to.
+
+In the example in "Basic usage", the way the weekday selector works is similar to how a checkbox works: the user can select as many days as needed. However, this might not always be what you want.
+
+We designed the widget's interface to make the widget's behavior easy to customize. So, for example, you want the
+weekday selector to resemble how a radio button works, you just need to tweak the `onChanged` callback.
+
+```dart
+class RadioLikeWeekdaySelector extends State<ExampleWidget> {
+  List<bool> values = List.filled(7, false);
+
+  @override
+  Widget build(BuildContext context) {
+    return WeekdaySelector(
+      onChanged: (int day) {
+        setState(() {
+          // Set all values to false except the "day"th element
+          values = List.filled(7, false, growable: false)..[day] = true;
+        });
+      },
+      values: values,
+    );
+  }
+}
+```
+
 ### Customization
 
 The [`WeekdaySelector`](https://pub.dev/documentation/weekday_selector/latest/weekday_selector/WeekdaySelector-class.html) class accepts many customization options: you can tweak the fill colors, text style, shape of the days, elevation, and more. In case you don't provide any of these values, the library will do its best to figure out a style that matches your material app's theme.
