@@ -83,7 +83,7 @@ class RadioLikeWeekdaySelector extends State<ExampleWidget> {
       onChanged: (int day) {
         setState(() {
           // Set all values to false except the "day"th element
-          values = List.filled(7, false, growable: false)..[day] = true;
+          values = List.filled(7, false, growable: false)..[day % 7] = true;
         });
       },
       values: values,
