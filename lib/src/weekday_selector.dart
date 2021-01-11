@@ -57,9 +57,9 @@ const defaultDisplayedDays = {
 /// Requires one of its ancestors to be a [Material] widget.
 class WeekdaySelector extends StatefulWidget {
   WeekdaySelector({
-    Key key,
-    @required this.onChanged,
-    @required this.values,
+    Key? key,
+    required this.onChanged,
+    required this.values,
     this.shortWeekdays = defaultShortWeekdays,
     this.weekdays = defaultWeekdays,
     this.firstDayOfWeek = defaultFirstDayOfWeek,
@@ -87,14 +87,9 @@ class WeekdaySelector extends StatefulWidget {
     this.shape,
     this.selectedShape,
     this.disabledShape,
-  })  : assert(values != null),
-        assert(shortWeekdays != null),
-        assert(weekdays != null),
-        assert(values.length == 7),
+  })  : assert(values.length == 7),
         assert(shortWeekdays.length == 7),
-        assert(shortWeekdays.every((d) => d != null)),
         assert(weekdays.length == 7),
-        assert(weekdays.every((d) => d != null)),
         super(key: key);
 
   /// Very short names for days of the week, starting with Sunday, e.g. 'S'.
@@ -149,7 +144,7 @@ class WeekdaySelector extends StatefulWidget {
   ///   true, // Saturday
   /// ],
   /// ```
-  final List<bool> values;
+  final List<bool?> values;
 
   /// Whether detected gestures should provide acoustic and/or haptic feedback.
   ///
@@ -159,78 +154,78 @@ class WeekdaySelector extends StatefulWidget {
   /// See also:
   ///
   ///  * [Feedback] for providing platform-specific feedback to certain actions.
-  final bool enableFeedback;
+  final bool? enableFeedback;
 
   /// The color for descendant [Text] widgets if the day is enabled.
   ///
   /// The [Text] widget contains the shortened version of the day.
-  final Color color;
+  final Color? color;
 
   /// The color for descendant [Text] widgets if the day is selected.
   ///
   /// The [Text] widget contains the shortened version of the day.
-  final Color selectedColor;
+  final Color? selectedColor;
 
   /// The color for descendant [Text] widgets if the day is enabled.
   ///
   /// The [Text] widget contains the shortened version of the day.
-  final Color disabledColor;
+  final Color? disabledColor;
 
   /// The background color of the day button if the day is enabled.
-  final Color fillColor;
+  final Color? fillColor;
 
   /// The background color of the day button if the day is selected.
-  final Color selectedFillColor;
+  final Color? selectedFillColor;
 
   /// The background color of the day button if the day is disabled.
-  final Color disabledFillColor;
+  final Color? disabledFillColor;
 
   /// The elevation of the button when the day is enabled.
-  final double elevation;
+  final double? elevation;
 
   /// The elevation of the button when the day is selected.
-  final double selectedElevation;
+  final double? selectedElevation;
 
   /// The elevation of the button when the day is disabled.
-  final double disabledElevation;
+  final double? disabledElevation;
 
   /// The background color of the day button if the day is enabled.
-  final Color focusColor;
+  final Color? focusColor;
 
   /// The focus color of the day button if the day is selected.
-  final Color selectedFocusColor;
+  final Color? selectedFocusColor;
 
   /// The color for the button's [Material] when a pointer is hovering over it
   /// and the day is enabled.
-  final Color hoverColor;
+  final Color? hoverColor;
 
   /// The color for the button's [Material] when a pointer is hovering over it
   /// and the day is selected.
-  final Color selectedHoverColor;
+  final Color? selectedHoverColor;
 
   /// The splash color for the button's [InkWell] if the day is enabled.
-  final Color splashColor;
+  final Color? splashColor;
 
   /// The splash color for the button's [InkWell] if the day is selected.
-  final Color selectedSplashColor;
+  final Color? selectedSplashColor;
 
   /// The text style of the button's text if the day is not selected.
-  final TextStyle textStyle;
+  final TextStyle? textStyle;
 
   /// The text style of the button's text if the day is selected.
-  final TextStyle selectedTextStyle;
+  final TextStyle? selectedTextStyle;
 
   /// The text style of the button's text if the day is disabled.
-  final TextStyle disabledTextStyle;
+  final TextStyle? disabledTextStyle;
 
   /// The shape of the enabled day button's [Material].
-  final ShapeBorder shape;
+  final ShapeBorder? shape;
 
   /// The shape of the selected day button's [Material].
-  final ShapeBorder selectedShape;
+  final ShapeBorder? selectedShape;
 
   /// The shape of the disabled day button's [Material].
-  final ShapeBorder disabledShape;
+  final ShapeBorder? disabledShape;
 
   /// Called when the user taps on a day.
   ///
@@ -240,7 +235,7 @@ class WeekdaySelector extends StatefulWidget {
   /// The callback provided to [onChanged] could update the state of the parent
   /// [StatefulWidget[ using the [State.setState] method (or use your favorite
   /// state management library) so that the parent gets rebuilt.
-  final ValueChanged<int> onChanged;
+  final ValueChanged<int>? onChanged;
 
   @override
   _WeekdaySelectorState createState() => _WeekdaySelectorState();
@@ -259,7 +254,7 @@ class _WeekdaySelectorState extends State<WeekdaySelector> {
       tooltip: widget.weekdays[arrayIndex],
       onPressed: widget.values[arrayIndex] == null
           ? null
-          : () => widget.onChanged(dateTimeDay),
+          : () => widget.onChanged!(dateTimeDay),
       enableFeedback: widget.enableFeedback,
       color: widget.color,
       selectedColor: widget.selectedColor,
@@ -308,11 +303,11 @@ class _WeekdaySelectorState extends State<WeekdaySelector> {
 class WeekdayButton extends StatelessWidget {
   /// Creates a [WeekdayButton] widget.
   const WeekdayButton({
-    Key key,
-    @required this.text,
-    @required this.tooltip,
-    @required this.onPressed,
-    @required this.selected,
+    Key? key,
+    required this.text,
+    required this.tooltip,
+    required this.onPressed,
+    required this.selected,
     this.enableFeedback,
     this.color,
     this.selectedColor,
@@ -335,9 +330,7 @@ class WeekdayButton extends StatelessWidget {
     this.shape,
     this.selectedShape,
     this.disabledShape,
-  })  : assert(text != null),
-        assert(tooltip != null),
-        assert(text.length != 0),
+  })  : assert(text.length != 0),
         assert(tooltip.length != 0),
         super(key: key);
 
@@ -353,12 +346,12 @@ class WeekdayButton extends StatelessWidget {
   final String tooltip;
 
   /// The callback which is called when the user taps on the weekday button.
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   /// Whether this day is selected.
   ///
   /// This property must not be null if [onPressed] is provided.
-  final bool selected;
+  final bool? selected;
 
   /// Whether detected gestures should provide acoustic and/or haptic feedback.
   ///
@@ -368,92 +361,92 @@ class WeekdayButton extends StatelessWidget {
   /// See also:
   ///
   ///  * [Feedback] for providing platform-specific feedback to certain actions.
-  final bool enableFeedback;
+  final bool? enableFeedback;
 
   /// The color for descendant [Text] widgets if the day is enabled.
   ///
   /// The [Text] widget contains the shortened version of the day.
-  final Color color;
+  final Color? color;
 
   /// The color for descendant [Text] widgets if the day is selected.
   ///
   /// The [Text] widget contains the shortened version of the day.
-  final Color selectedColor;
+  final Color? selectedColor;
 
   /// The color for descendant [Text] widgets if the day is enabled.
   ///
   /// The [Text] widget contains the shortened version of the day.
-  final Color disabledColor;
+  final Color? disabledColor;
 
   /// The background color of the day button if the day is enabled.
-  final Color fillColor;
+  final Color? fillColor;
 
   /// The background color of the day button if the day is selected.
-  final Color selectedFillColor;
+  final Color? selectedFillColor;
 
   /// The background color of the day button if the day is disabled.
-  final Color disabledFillColor;
+  final Color? disabledFillColor;
 
   /// The elevation of the button when the day is enabled.
-  final double elevation;
+  final double? elevation;
 
   /// The elevation of the button when the day is selected.
-  final double selectedElevation;
+  final double? selectedElevation;
 
   /// The elevation of the button when the day is disabled.
-  final double disabledElevation;
+  final double? disabledElevation;
 
   /// The color for the button's [Material] when it has the input focus and the
   /// day is enabled
-  final Color focusColor;
+  final Color? focusColor;
 
   /// The color for the button's [Material] when it has the input focus and the
   /// day is selected
-  final Color selectedFocusColor;
+  final Color? selectedFocusColor;
 
   /// The color for the button's [Material] when a pointer is hovering over it
   /// and the day is enabled.
-  final Color hoverColor;
+  final Color? hoverColor;
 
   /// The color for the button's [Material] when a pointer is hovering over it
   /// and the day is selected.
-  final Color selectedHoverColor;
+  final Color? selectedHoverColor;
 
   /// The splash color for the button's [InkWell] if the day is enabled.
-  final Color splashColor;
+  final Color? splashColor;
 
   /// The splash color for the button's [InkWell] if the day is selected.
-  final Color selectedSplashColor;
+  final Color? selectedSplashColor;
 
   /// The text style of the day button's [Text] descendant if the day is enabled.
-  final TextStyle textStyle;
+  final TextStyle? textStyle;
 
   /// The text style of the day button's [Text] descendant if the day is selected.
-  final TextStyle selectedTextStyle;
+  final TextStyle? selectedTextStyle;
 
   /// The text style of the day button's [Text] descendant if the day is disabled.
-  final TextStyle disabledTextStyle;
+  final TextStyle? disabledTextStyle;
 
   /// The shape of the enabled day button's [Material].
-  final ShapeBorder shape;
+  final ShapeBorder? shape;
 
   /// The shape of the selected day button's [Material].
-  final ShapeBorder selectedShape;
+  final ShapeBorder? selectedShape;
 
   /// The shape of the disabled day button's [Material].
-  final ShapeBorder disabledShape;
+  final ShapeBorder? disabledShape;
 
   @override
   Widget build(BuildContext context) {
     Color currentColor;
     Color currentFillColor;
-    Color currentFocusColor;
-    Color currentHoverColor;
-    Color currentSplashColor;
-    double currentElevation;
-    double currentDisabledElevation;
+    Color? currentFocusColor;
+    Color? currentHoverColor;
+    Color? currentSplashColor;
+    double? currentElevation;
+    double? currentDisabledElevation;
     TextStyle currentTextStyle;
-    ShapeBorder currentShape;
+    ShapeBorder? currentShape;
 
     final theme = Theme.of(context);
     final weekdayTheme = WeekdaySelectorTheme.of(context);
@@ -463,46 +456,46 @@ class WeekdayButton extends StatelessWidget {
     if (onPressed != null && selected == false) {
       currentColor = color ??
           weekdayTheme?.color ??
-          theme.buttonTheme.colorScheme.onSurface;
+          theme.buttonTheme.colorScheme!.onSurface;
       currentFillColor = fillColor ??
           weekdayTheme?.fillColor ??
-          theme.buttonTheme.colorScheme.surface;
+          theme.buttonTheme.colorScheme!.surface;
       currentElevation = elevation ?? weekdayTheme?.elevation ?? 1;
       currentFocusColor = focusColor ??
           weekdayTheme?.focusColor ??
-          theme.buttonTheme.colorScheme.onSurface.withOpacity(0.12);
+          theme.buttonTheme.colorScheme!.onSurface.withOpacity(0.12);
       currentHoverColor = hoverColor ??
           weekdayTheme?.hoverColor ??
-          theme.buttonTheme.colorScheme.onSurface.withOpacity(0.04);
+          theme.buttonTheme.colorScheme!.onSurface.withOpacity(0.04);
       currentSplashColor = splashColor ??
           weekdayTheme?.splashColor ??
-          theme.buttonTheme.colorScheme.onSurface.withOpacity(0.16);
+          theme.buttonTheme.colorScheme!.onSurface.withOpacity(0.16);
       currentTextStyle = textStyle ??
           weekdayTheme?.textStyle ??
-          theme.textTheme.bodyText2.copyWith(color: currentColor);
+          theme.textTheme.bodyText2!.copyWith(color: currentColor);
       currentShape = shape;
     } else if (onPressed != null && selected == true) {
       currentColor = selectedColor ??
           weekdayTheme?.selectedColor ??
-          theme.buttonTheme.colorScheme.onPrimary;
+          theme.buttonTheme.colorScheme!.onPrimary;
       currentFillColor = selectedFillColor ??
           weekdayTheme?.selectedFillColor ??
-          theme.buttonTheme.colorScheme.primary;
+          theme.buttonTheme.colorScheme!.primary;
       currentElevation =
           selectedElevation ?? weekdayTheme?.selectedElevation ?? 2;
       currentFocusColor = selectedFocusColor ??
           weekdayTheme?.selectedFocusColor ??
-          theme.buttonTheme.colorScheme.primary.withOpacity(0.12);
+          theme.buttonTheme.colorScheme!.primary.withOpacity(0.12);
       currentHoverColor = selectedHoverColor ??
           weekdayTheme?.selectedHoverColor ??
-          theme.buttonTheme.colorScheme.primary.withOpacity(0.04);
+          theme.buttonTheme.colorScheme!.primary.withOpacity(0.04);
       currentSplashColor = selectedSplashColor ??
           weekdayTheme?.selectedSplashColor ??
-          theme.buttonTheme.colorScheme.primary.withOpacity(0.16);
+          theme.buttonTheme.colorScheme!.primary.withOpacity(0.16);
       currentShape = selectedShape ?? weekdayTheme?.selectedShape;
       currentTextStyle = selectedTextStyle ??
           weekdayTheme?.selectedTextStyle ??
-          theme.textTheme.bodyText2.copyWith(color: currentColor);
+          theme.textTheme.bodyText2!.copyWith(color: currentColor);
     } else {
       currentDisabledElevation =
           disabledElevation ?? weekdayTheme?.disabledElevation ?? 0;
@@ -515,7 +508,7 @@ class WeekdayButton extends StatelessWidget {
       currentShape = disabledShape ?? weekdayTheme?.disabledShape;
       currentTextStyle = disabledTextStyle ??
           weekdayTheme?.disabledTextStyle ??
-          theme.textTheme.bodyText2.copyWith(color: currentColor);
+          theme.textTheme.bodyText2!.copyWith(color: currentColor);
     }
 
     return Expanded(

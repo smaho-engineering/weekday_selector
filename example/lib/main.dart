@@ -31,23 +31,23 @@ class _MyAppState extends State<MyApp> {
           items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
-              title: Text('Usage'),
+              label: 'Usage',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.flag),
-              title: Text('i18n'),
+              label: 'i18n',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.ac_unit),
-              title: Text('Styles'),
+              label: 'Styles',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.send),
-              title: Text('Forms'),
+              label: 'Forms',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.play_circle_outline),
-              title: Text('Animated'),
+              label: 'Animated',
             ),
           ],
         ),
@@ -214,13 +214,13 @@ String intDayToEnglish(int day) {
 class ExampleTitle extends StatelessWidget {
   final String title;
 
-  const ExampleTitle(this.title, {Key key}) : super(key: key);
+  const ExampleTitle(this.title, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Text(title, style: Theme.of(context).textTheme.title),
+      child: Text(title, style: Theme.of(context).textTheme.headline6),
     );
   }
 }
@@ -236,7 +236,7 @@ class SimpleExampleWeekendsStatic extends StatefulWidget {
 
 class _SimpleExampleWeekendsStaticState
     extends State<SimpleExampleWeekendsStatic> {
-  int lastTapped;
+  int? lastTapped;
 
   @override
   Widget build(BuildContext context) {
@@ -283,7 +283,7 @@ class DisabledExample extends StatefulWidget {
 }
 
 class _DisabledExampleState extends State<DisabledExample> {
-  final values = <bool>[null, false, true, false, true, false, null];
+  final values = <bool?>[null, false, true, false, true, false, null];
 
   @override
   Widget build(BuildContext context) {
@@ -301,7 +301,7 @@ class _DisabledExampleState extends State<DisabledExample> {
           onChanged: (v) {
             printIntAsDay(v);
             setState(() {
-              values[v % 7] = !values[v % 7];
+              values[v % 7] = !values[v % 7]!;
             });
           },
           values: values,
@@ -393,7 +393,7 @@ class _DisplayedDaysExampleState extends State<DisplayedDaysExample> {
   }
 }
 
-String valuesToEnglishDays(List<bool> values, bool searchedValue) {
+String valuesToEnglishDays(List<bool?> values, bool? searchedValue) {
   final days = <String>[];
   for (int i = 0; i < values.length; i++) {
     final v = values[i];
@@ -410,7 +410,7 @@ class ElevationExample extends StatefulWidget {
 }
 
 class _ElevationExampleState extends State<ElevationExample> {
-  final values = <bool>[null, false, true, false, true, false, null];
+  final values = <bool?>[null, false, true, false, true, false, null];
 
   @override
   Widget build(BuildContext context) {
@@ -424,7 +424,7 @@ class _ElevationExampleState extends State<ElevationExample> {
           onChanged: (v) {
             printIntAsDay(v);
             setState(() {
-              values[v % 7] = !values[v % 7];
+              values[v % 7] = !values[v % 7]!;
             });
           },
           selectedElevation: 15,
@@ -443,7 +443,7 @@ class CurrentLocaleExample extends StatefulWidget {
 }
 
 class _CurrentLocaleExampleState extends State<CurrentLocaleExample> {
-  final values = <bool>[
+  final values = <bool?>[
     true,
     true,
     true,
@@ -459,7 +459,7 @@ class _CurrentLocaleExampleState extends State<CurrentLocaleExample> {
     // TODO: it should work somewhat like this:
     // initializeDateFormatting...
     // final dateSymbols = DateFormat().dateSymbols;
-    final locale = Localizations.localeOf(context);
+    final locale = Localizations.localeOf(context)!;
     final DateSymbols dateSymbols = dateTimeSymbolMap()['$locale'];
     final textDirection = getTextDirection(locale);
     return Column(
@@ -479,7 +479,7 @@ class _CurrentLocaleExampleState extends State<CurrentLocaleExample> {
           onChanged: (v) {
             printIntAsDay(v);
             setState(() {
-              values[v % 7] = !values[v % 7];
+              values[v % 7] = !values[v % 7]!;
             });
           },
           values: values,
@@ -657,7 +657,7 @@ class SaneDefaultThemeExample extends StatefulWidget {
 }
 
 class _SaneDefaultThemeExampleState extends State<SaneDefaultThemeExample> {
-  final values = <bool>[null, null, true, true, false, false, true];
+  final values = <bool?>[null, null, true, true, false, false, true];
 
   @override
   Widget build(BuildContext context) {
@@ -673,7 +673,7 @@ class _SaneDefaultThemeExampleState extends State<SaneDefaultThemeExample> {
           onChanged: (v) {
             printIntAsDay(v);
             setState(() {
-              values[v % 7] = !values[v % 7];
+              values[v % 7] = !values[v % 7]!;
             });
           },
           values: values,
@@ -689,7 +689,7 @@ class SimpleShapesExample extends StatefulWidget {
 }
 
 class _SimpleShapesExampleState extends State<SimpleShapesExample> {
-  final values = <bool>[null, false, true, false, true, false, null];
+  final values = <bool?>[null, false, true, false, true, false, null];
 
   @override
   Widget build(BuildContext context) {
@@ -703,7 +703,7 @@ class _SimpleShapesExampleState extends State<SimpleShapesExample> {
           onChanged: (v) {
             printIntAsDay(v);
             setState(() {
-              values[v % 7] = !values[v % 7];
+              values[v % 7] = !values[v % 7]!;
             });
           },
           values: values,
@@ -728,7 +728,7 @@ class CustomShapesExample extends StatefulWidget {
 }
 
 class _CustomShapesExampleState extends State<CustomShapesExample> {
-  final values = <bool>[null, false, true, false, true, false, null];
+  final values = <bool?>[null, false, true, false, true, false, null];
 
   @override
   Widget build(BuildContext context) {
@@ -742,7 +742,7 @@ class _CustomShapesExampleState extends State<CustomShapesExample> {
           onChanged: (v) {
             printIntAsDay(v);
             setState(() {
-              values[v % 7] = !values[v % 7];
+              values[v % 7] = !values[v % 7]!;
             });
           },
           values: values,

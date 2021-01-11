@@ -55,83 +55,83 @@ class WeekdaySelectorThemeData with Diagnosticable {
   /// See also:
   ///
   ///  * [Feedback] for providing platform-specific feedback to certain actions.
-  final bool enableFeedback;
+  final bool? enableFeedback;
 
   /// The color for descendant [MaterialWeekdayButton] widgets'
   /// [Text] widgets if the day is enabled.
   ///
   /// The [Text] widget by default contains the shortened version of the day.
-  final Color color;
+  final Color? color;
 
   /// The color for descendant [MaterialWeekdayButton] widgets'
   /// [Text] widgets if the day is selected.
   ///
   /// The [Text] widget by default contains the shortened version of the day.
-  final Color selectedColor;
+  final Color? selectedColor;
 
   /// The color for descendant [MaterialWeekdayButton] widgets'
   /// [Text] widgets if the day is disabled.
   ///
   /// The [Text] widget by default contains the shortened version of the day.
-  final Color disabledColor;
+  final Color? disabledColor;
 
   /// The background color for enabled day buttons.
-  final Color fillColor;
+  final Color? fillColor;
 
   /// The background color for selected day buttons.
-  final Color selectedFillColor;
+  final Color? selectedFillColor;
 
   /// The background color for disabled day buttons.
-  final Color disabledFillColor;
+  final Color? disabledFillColor;
 
   /// The elevation for enabled day buttons.
-  final double elevation;
+  final double? elevation;
 
   /// The elevation for selected day buttons.
-  final double selectedElevation;
+  final double? selectedElevation;
 
   /// The elevation for disabled day buttons.
-  final double disabledElevation;
+  final double? disabledElevation;
 
   /// The color for the button's [Material] when it has the input focus and the
   /// day is enabled
-  final Color focusColor;
+  final Color? focusColor;
 
   /// The color for the button's [Material] when it has the input focus and the
   /// day is selected
-  final Color selectedFocusColor;
+  final Color? selectedFocusColor;
 
   /// The color for the button's [Material] when a pointer is hovering over it
   /// and the day is enabled.
-  final Color hoverColor;
+  final Color? hoverColor;
 
   /// The color for the button's [Material] when a pointer is hovering over it
   /// and the day is selected.
-  final Color selectedHoverColor;
+  final Color? selectedHoverColor;
 
   /// The splash color for the button's [InkWell] if the day is enabled.
-  final Color splashColor;
+  final Color? splashColor;
 
   /// The splash color for the button's [InkWell] if the day is selected.
-  final Color selectedSplashColor;
+  final Color? selectedSplashColor;
 
   /// The text style of the day button's [Text] descendant if the day is enabled.
-  final TextStyle textStyle;
+  final TextStyle? textStyle;
 
   /// The text style of the day button's [Text] descendant if the day is selected.
-  final TextStyle selectedTextStyle;
+  final TextStyle? selectedTextStyle;
 
   /// The text style of the day button's [Text] descendant if the day is disabled.
-  final TextStyle disabledTextStyle;
+  final TextStyle? disabledTextStyle;
 
   /// The shape of the enabled day button's [Material].
-  final ShapeBorder shape;
+  final ShapeBorder? shape;
 
   /// The shape of the selected day button's [Material].
-  final ShapeBorder selectedShape;
+  final ShapeBorder? selectedShape;
 
   /// The shape of the disabled day button's [Material].
-  final ShapeBorder disabledShape;
+  final ShapeBorder? disabledShape;
 
   @override
   int get hashCode {
@@ -165,7 +165,8 @@ class WeekdaySelectorThemeData with Diagnosticable {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other.runtimeType != runtimeType) return false;
-    final WeekdaySelectorThemeData typedOther = other;
+    // ignore: test_types_in_equals
+    final typedOther = other as WeekdaySelectorThemeData;
     return typedOther.enableFeedback == enableFeedback &&
         typedOther.color == color &&
         typedOther.selectedColor == selectedColor &&
@@ -314,11 +315,10 @@ class WeekdaySelectorTheme extends InheritedTheme {
   ///
   /// The [data] argument must not be null.
   const WeekdaySelectorTheme({
-    Key key,
-    @required this.data,
-    Widget child,
-  })  : assert(data != null),
-        super(key: key, child: child);
+    Key? key,
+    required this.data,
+    required Widget child,
+  }) : super(key: key, child: child);
 
   /// Specifies the appearance for descendant [WeekdayButton] widgets.
   final WeekdaySelectorThemeData data;
@@ -333,8 +333,8 @@ class WeekdaySelectorTheme extends InheritedTheme {
   /// ```dart
   /// final MaterialWeekdaySelectorTheme theme = MaterialWeekdaySelectorTheme.of(context);
   /// ```
-  static WeekdaySelectorThemeData of(BuildContext context) {
-    final WeekdaySelectorTheme theme =
+  static WeekdaySelectorThemeData? of(BuildContext context) {
+    final WeekdaySelectorTheme? theme =
         context.dependOnInheritedWidgetOfExactType<WeekdaySelectorTheme>();
     return theme?.data;
   }
@@ -346,7 +346,7 @@ class WeekdaySelectorTheme extends InheritedTheme {
 
   @override
   Widget wrap(BuildContext context, Widget child) {
-    final WeekdaySelectorTheme ancestorTheme =
+    final WeekdaySelectorTheme? ancestorTheme =
         context.findAncestorWidgetOfExactType<WeekdaySelectorTheme>();
     return identical(this, ancestorTheme)
         ? child

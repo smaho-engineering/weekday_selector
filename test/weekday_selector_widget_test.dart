@@ -4,35 +4,6 @@ import 'package:weekday_selector/weekday_selector.dart';
 
 void main() {
   group('$WeekdaySelector constructor', () {
-    test('initial values must not be null', () {
-      expect(
-        () => WeekdaySelector(onChanged: (_) {}, values: null),
-        throwsAssertionError,
-      );
-    });
-
-    test('weekdays must not be null', () {
-      expect(
-        () => WeekdaySelector(
-          onChanged: (_) {},
-          values: List.filled(7, false),
-          weekdays: null,
-        ),
-        throwsAssertionError,
-      );
-    });
-
-    test('shortWeekdays must not be null', () {
-      expect(
-        () => WeekdaySelector(
-          onChanged: (_) {},
-          values: List.filled(7, false),
-          shortWeekdays: null,
-        ),
-        throwsAssertionError,
-      );
-    });
-
     test('values length must be 7', () {
       expect(
         () => WeekdaySelector(
@@ -64,51 +35,9 @@ void main() {
         throwsAssertionError,
       );
     });
-
-    test('all weekdays values must be non-null strings', () {
-      expect(
-        () => WeekdaySelector(
-          onChanged: (_) {},
-          weekdays: [
-            'Day A',
-            'Day B',
-            'Day C',
-            'Day D',
-            'Day E',
-            'Day F',
-            null,
-          ],
-          values: List.filled(7, false),
-        ),
-        throwsAssertionError,
-      );
-    });
-
-    test('all shortWeekdays values must be non-null strings', () {
-      expect(
-        () => WeekdaySelector(
-          onChanged: (_) {},
-          shortWeekdays: ['A', 'B', 'C', 'D', 'E', 'F', null],
-          values: List.filled(7, false),
-        ),
-        throwsAssertionError,
-      );
-    });
   });
 
   group('$WeekdayButton constructor', () {
-    test('tooltip must be set', () {
-      expect(
-        () => WeekdayButton(
-          onPressed: () {},
-          tooltip: null,
-          selected: null,
-          text: 'Text',
-        ),
-        throwsAssertionError,
-      );
-    });
-
     test('tooltip must not be empty', () {
       expect(
         () => WeekdayButton(
@@ -116,18 +45,6 @@ void main() {
           tooltip: '',
           selected: null,
           text: 'Text',
-        ),
-        throwsAssertionError,
-      );
-    });
-
-    test('text must be set', () {
-      expect(
-        () => WeekdayButton(
-          onPressed: () {},
-          tooltip: 'Tooltip',
-          selected: null,
-          text: null,
         ),
         throwsAssertionError,
       );
@@ -147,14 +64,14 @@ void main() {
   });
 
   group('$WeekdaySelector with simple default values', () {
-    Widget widget;
-    List<int> changed;
+    late Widget widget;
+    List<int>? changed;
 
     setUp(() {
       changed = [];
       widget = MaterialApp(
         home: WeekdaySelector(
-          onChanged: changed.add,
+          onChanged: changed!.add,
           values: const [true, false, false, false, false, false, true],
         ),
       );
@@ -236,7 +153,7 @@ void main() {
   });
 
   group('$WeekdaySelector with only the subset of the days displayed', () {
-    Widget widget;
+    late Widget widget;
     List<int> changed;
 
     setUp(() {
@@ -301,8 +218,8 @@ void main() {
   group(
       '$WeekdaySelector with custom weekdays, tooltips and first day of '
       'the week from the intl package (Mexico)', () {
-    Widget widget;
-    List<int> changed;
+    late Widget widget;
+    List<int>? changed;
 
     setUp(() {
       changed = [];
@@ -313,7 +230,7 @@ void main() {
       const firstDayOfWeekDateTime = firstDayOfWeekIntl + 1;
       widget = MaterialApp(
           home: WeekdaySelector(
-        onChanged: changed.add,
+        onChanged: changed!.add,
         values: const [true, false, false, false, false, false, true],
         weekdays: const [
           'domingo',

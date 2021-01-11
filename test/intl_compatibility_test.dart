@@ -9,17 +9,17 @@ import 'package:weekday_selector/weekday_selector.dart';
 /// add a dependency to the package itself.
 void main() {
   group('default values must match intl package', () {
-    final DateSymbols enIso = dateTimeSymbolMap()['en_ISO'];
+    final DateSymbols? enIso = dateTimeSymbolMap()['en_ISO'];
 
     test('defaultWeekdays', () {
-      expect(defaultWeekdays, enIso.WEEKDAYS);
+      expect(defaultWeekdays, enIso!.WEEKDAYS);
     });
     test('defaultShortWeekdays', () {
-      expect(defaultShortWeekdays, enIso.NARROWWEEKDAYS);
+      expect(defaultShortWeekdays, enIso!.NARROWWEEKDAYS);
     });
     test('defaultFirstDayOfWeek', () {
       // IMPORTANT: https://github.com/dart-lang/intl/issues/265
-      expect(defaultFirstDayOfWeek, enIso.FIRSTDAYOFWEEK + 1);
+      expect(defaultFirstDayOfWeek, enIso!.FIRSTDAYOFWEEK + 1);
     });
   });
 }
