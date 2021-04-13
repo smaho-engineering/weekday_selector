@@ -459,7 +459,7 @@ class _CurrentLocaleExampleState extends State<CurrentLocaleExample> {
     // TODO: it should work somewhat like this:
     // initializeDateFormatting...
     // final dateSymbols = DateFormat().dateSymbols;
-    final locale = Localizations.localeOf(context)!;
+    final locale = Localizations.localeOf(context);
     final DateSymbols dateSymbols = dateTimeSymbolMap()['$locale'];
     final textDirection = getTextDirection(locale);
     return Column(

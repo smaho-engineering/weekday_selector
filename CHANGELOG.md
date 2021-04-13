@@ -1,3 +1,7 @@
+## 1.0.0-nullsafety.0
+
+Migrate to null-safety.
+
 ## 0.4.0
 
 Remove `DiagnosticableMixin` and use the `Diagnosticable` mixin. [`#2`](https://github.com/smaho-engineering/weekday_selector/pull/2)

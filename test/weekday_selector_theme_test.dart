@@ -389,7 +389,7 @@ void main() {
           data: buildThemeData(),
           child: Builder(
             builder: (context) {
-              return FlatButton(
+              return TextButton(
                 child: Text('Tap me'),
                 onPressed: () {
                   final WeekdaySelectorTheme typedTheme =
@@ -424,7 +424,7 @@ void main() {
             data: buildThemeData(Colors.red),
             child: Builder(
               builder: (context) {
-                return FlatButton(
+                return TextButton(
                   child: Text('Tap me'),
                   onPressed: () {
                     final WeekdaySelectorTheme typedTheme =

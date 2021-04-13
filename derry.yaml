@@ -1,0 +1,24 @@
+get: flutter pub get
+format: flutter format --set-exit-if-changed .
+analyze: flutter analyze --fatal-infos --fatal-warnings .
+test: flutter test
+test-coverage:
+  - flutter test --coverage
+  - genhtml coverage/lcov.info -o coverage/html
+  - genhtml coverage/lcov.info -o coverage/html
+  - echo '> open coverage/html/index.html'
+example:
+  - cd example && flutter format --set-exit-if-changed .
+  - cd example && flutter analyze --fatal-infos --fatal-warnings .
+  - cd example && flutter build apk
+publish-dry-run:
+  - pub publish --dry-run
+# Verify everything
+check:
+  - $get
+  - $format
+  - $analyze
+  - $test
+  - $example
+  - $test-coverage
+  - $publish-dry-run
