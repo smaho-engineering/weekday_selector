@@ -3,11 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:weekday_selector/weekday_selector.dart';
 
-final Matcher throwsAssertionError = throwsA(isA<AssertionError>());
-final Matcher dontThrowAssertionError = isNot(throwsA(isA<AssertionError>()));
+extension on List<DiagnosticsNode> {
+  DiagnosticsNode find(String name) {
+    return firstWhere((dn) => dn.name == name);
+  }
+}
 
 void main() {
-  group('$WeekdaySelectorThemeData', () {
+  WeekdaySelectorThemeData buildThemeData([Color? color]) {
+    return WeekdaySelectorThemeData(
+      enableFeedback: true,
+      color: color ?? Colors.red,
+      selectedColor: Colors.blue,
+      disabledColor: Colors.green,
+      fillColor: Colors.yellow,
+      elevation: 1,
+      selectedElevation: 2,
+      disabledElevation: 3,
+    );
+  }
+
+  group(WeekdaySelectorThemeData, () {
     group('overrides equals operator', () {
       test('equal', () {
         expect(
@@ -15,6 +31,7 @@ void main() {
           equals(buildThemeData()),
         );
       });
+
       test('not equal', () {
         expect(
           buildThemeData(Colors.amber),
@@ -30,6 +47,7 @@ void main() {
         set.add(buildThemeData());
         expect(set, hasLength(1));
       });
+
       test('different hash codes', () {
         final set = <WeekdaySelectorThemeData>{};
         set.add(buildThemeData());
@@ -39,122 +57,80 @@ void main() {
     });
 
     group('debugFillProperties', () {
-      List<DiagnosticsNode>? properties;
+      late List<DiagnosticsNode> properties;
 
-      findByName(List<DiagnosticsNode> properties, String name) {
-        return properties.firstWhere((n) => n.name == name);
-      }
-
-      setUp(() {
-        final themeData = buildThemeData();
+      setUpAll(() {
         final builder = DiagnosticPropertiesBuilder();
-        themeData.debugFillProperties(builder);
+        buildThemeData().debugFillProperties(builder);
         properties = builder.properties;
       });
 
-      // I have no idea what I'm doing... :)
-      // These tests might not make much sense yet
-
-      test('count', () {
-        // 19 + text styles optional
-        expect(properties, hasLength(greaterThanOrEqualTo(19)));
-      });
-
       test('feedback', () {
-        final feedback = findByName(properties!, 'feedback');
+        final feedback = properties.find('feedback');
         expect(feedback, isA<FlagProperty>());
         expect(feedback.value, true);
         expect(feedback.toDescription(), 'enabled');
       });
 
       test('color', () {
-        final color = findByName(properties!, 'color');
-        expect(color, isA<ColorProperty>());
+        expect(properties.find('color'), isA<ColorProperty>());
       });
 
       test('selectedColor', () {
-        final selectedColor = findByName(properties!, 'selectedColor');
-        expect(selectedColor, isA<ColorProperty>());
+        expect(properties.find('selectedColor'), isA<ColorProperty>());
       });
 
       test('disabledColor', () {
-        final disabledColor = findByName(properties!, 'disabledColor');
-        expect(disabledColor, isA<ColorProperty>());
+        expect(properties.find('disabledColor'), isA<ColorProperty>());
       });
 
       test('fillColor', () {
-        final fillColor = findByName(properties!, 'fillColor');
-        expect(fillColor, isA<ColorProperty>());
+        expect(properties.find('fillColor'), isA<ColorProperty>());
       });
 
       test('selectedFillColor', () {
-        final selectedFillColor = findByName(properties!, 'selectedFillColor');
-        expect(selectedFillColor, isA<ColorProperty>());
+        expect(properties.find('selectedFillColor'), isA<ColorProperty>());
       });
 
       test('disabledFillColor', () {
-        final disabledFillColor = findByName(properties!, 'disabledFillColor');
-        expect(disabledFillColor, isA<ColorProperty>());
+        expect(properties.find('disabledFillColor'), isA<ColorProperty>());
       });
 
       test('focusColor', () {
-        final focusColor = findByName(properties!, 'focusColor');
-        expect(focusColor, isA<ColorProperty>());
+        expect(properties.find('focusColor'), isA<ColorProperty>());
       });
 
       test('selectedFocusColor', () {
-        final selectedFocusColor =
-            findByName(properties!, 'selectedFocusColor');
-        expect(selectedFocusColor, isA<ColorProperty>());
+        expect(properties.find('selectedFocusColor'), isA<ColorProperty>());
       });
 
       test('hoverColor', () {
-        final hoverColor = findByName(properties!, 'hoverColor');
-        expect(hoverColor, isA<ColorProperty>());
+        expect(properties.find('hoverColor'), isA<ColorProperty>());
       });
 
       test('selectedHoverColor', () {
-        final selectedHoverColor =
-            findByName(properties!, 'selectedHoverColor');
-        expect(selectedHoverColor, isA<ColorProperty>());
+        expect(properties.find('selectedHoverColor'), isA<ColorProperty>());
       });
 
       test('selectedSplashColor', () {
-        final selectedSplashColor =
-            findByName(properties!, 'selectedSplashColor');
-        expect(selectedSplashColor, isA<ColorProperty>());
+        expect(properties.find('selectedSplashColor'), isA<ColorProperty>());
       });
 
       test('elevation', () {
-        final elevation = findByName(properties!, 'elevation');
-        expect(elevation, isA<DoubleProperty>());
+        expect(properties.find('elevation'), isA<DoubleProperty>());
       });
 
       test('disabledElevation', () {
-        final disabledElevation = findByName(properties!, 'disabledElevation');
-        expect(disabledElevation, isA<DoubleProperty>());
+        expect(properties.find('disabledElevation'), isA<DoubleProperty>());
       });
 
       test('selectedElevation', () {
-        final selectedElevation = findByName(properties!, 'selectedElevation');
-        expect(selectedElevation, isA<DoubleProperty>());
+        expect(properties.find('selectedElevation'), isA<DoubleProperty>());
       });
     });
   });
 
-  group('$WeekdaySelectorTheme', () {
-    group('constructor', () {
-      test('works?', () {
-        expect(
-          () => WeekdaySelectorTheme(
-            child: Text(''),
-            data: buildThemeData(),
-          ),
-          dontThrowAssertionError,
-        );
-      });
-    });
-
+  group(WeekdaySelectorTheme, () {
     group('updateShouldNotify', () {
       test('notify when data is different', () {
         final theme1 = WeekdaySelectorTheme(
@@ -167,6 +143,7 @@ void main() {
         );
         expect(theme1.updateShouldNotify(theme2), true);
       });
+
       test('do not notify when data is the same', () {
         final theme1 = WeekdaySelectorTheme(
           child: Text(''),
@@ -183,9 +160,8 @@ void main() {
 
   group('$WeekdaySelectorTheme with the $WeekdaySelector widget - not selected',
       () {
-    // For these tests, the only important thing is that Monday isn't selected,
-    // let's just use the same values for all test cases.
-    const values = [null, false, null, null, null, null, null];
+    // For these tests, the only important thing is that Monday isn't selected.
+    const mondayNotSelected = [null, false, null, null, null, null, null];
 
     testWidgets(
       'text color uses material theme by default',
@@ -196,7 +172,7 @@ void main() {
               colorScheme: ColorScheme.dark(surface: Colors.green),
             ),
           ),
-          home: WeekdaySelector(onChanged: null, values: values),
+          home: WeekdaySelector(onChanged: null, values: mondayNotSelected),
         );
         await t.pumpWidget(widget);
         final RawMaterialButton aButton = find
@@ -215,7 +191,7 @@ void main() {
           theme: ThemeData(primarySwatch: Colors.blue),
           home: WeekdaySelectorTheme(
             data: WeekdaySelectorThemeData(fillColor: Colors.red),
-            child: WeekdaySelector(onChanged: null, values: values),
+            child: WeekdaySelector(onChanged: null, values: mondayNotSelected),
           ),
         );
         await t.pumpWidget(widget);
@@ -238,7 +214,8 @@ void main() {
               data: WeekdaySelectorThemeData(fillColor: Colors.purple),
               child: WeekdaySelectorTheme(
                 data: WeekdaySelectorThemeData(fillColor: Colors.yellow),
-                child: WeekdaySelector(onChanged: null, values: values),
+                child:
+                    WeekdaySelector(onChanged: null, values: mondayNotSelected),
               ),
             ),
           ),
@@ -264,7 +241,7 @@ void main() {
               child: WeekdaySelector(
                 fillColor: Colors.deepOrange,
                 onChanged: null,
-                values: values,
+                values: mondayNotSelected,
               ),
             ),
           ),
@@ -279,11 +256,11 @@ void main() {
       },
     );
   });
+
   group('$WeekdaySelectorTheme with the $WeekdaySelector widget - selected',
       () {
-    // For these tests, the only important thing is that Monday isn't selected,
-    // let's just use the same values for all test cases.
-    const values = [null, true, null, null, null, null, null];
+    // For these tests, the only important thing is that Monday is selected.
+    const mondaySelected = [null, true, null, null, null, null, null];
 
     testWidgets(
       'text color uses material theme by default',
@@ -294,7 +271,7 @@ void main() {
               colorScheme: ColorScheme.dark(primary: Colors.black),
             ),
           ),
-          home: WeekdaySelector(onChanged: (_) {}, values: values),
+          home: WeekdaySelector(onChanged: (_) {}, values: mondaySelected),
         );
         await t.pumpWidget(widget);
         final RawMaterialButton aButton = find
@@ -313,7 +290,7 @@ void main() {
           theme: ThemeData(primarySwatch: Colors.blue),
           home: WeekdaySelectorTheme(
             data: WeekdaySelectorThemeData(selectedFillColor: Colors.cyan),
-            child: WeekdaySelector(onChanged: (_) {}, values: values),
+            child: WeekdaySelector(onChanged: (_) {}, values: mondaySelected),
           ),
         );
         await t.pumpWidget(widget);
@@ -336,7 +313,8 @@ void main() {
               data: WeekdaySelectorThemeData(selectedFillColor: Colors.grey),
               child: WeekdaySelectorTheme(
                 data: WeekdaySelectorThemeData(selectedFillColor: Colors.lime),
-                child: WeekdaySelector(onChanged: (_) {}, values: values),
+                child:
+                    WeekdaySelector(onChanged: (_) {}, values: mondaySelected),
               ),
             ),
           ),
@@ -362,7 +340,7 @@ void main() {
               child: WeekdaySelector(
                 selectedFillColor: Colors.lightBlue,
                 onChanged: (_) {},
-                values: values,
+                values: mondaySelected,
               ),
             ),
           ),
@@ -377,92 +355,4 @@ void main() {
       },
     );
   });
-
-  group('wrap', () {
-    // It's probably stupid. Maybe we should skip it?
-    testWidgets('I guess works????????', (t) async {
-      Widget? wrapped;
-      final themeKey = GlobalKey();
-      final widget = MaterialApp(
-        home: WeekdaySelectorTheme(
-          key: themeKey,
-          data: buildThemeData(),
-          child: Builder(
-            builder: (context) {
-              return TextButton(
-                child: Text('Tap me'),
-                onPressed: () {
-                  final WeekdaySelectorTheme typedTheme =
-                      themeKey.currentWidget as WeekdaySelectorTheme;
-                  wrapped = typedTheme.wrap(context, Text('Wrapped!'));
-                },
-              );
-            },
-          ),
-        ),
-      );
-      await t.pumpWidget(widget);
-      final buttonFinder = find.text('Tap me');
-      expect(buttonFinder, findsOneWidget);
-      await t.tap(buttonFinder);
-
-      expect(wrapped, isNot(null));
-      await t.pumpWidget(MaterialApp(home: wrapped));
-      expect(find.text('Wrapped!'), findsOneWidget);
-      expect(find.byType(WeekdaySelectorTheme), findsNothing);
-    });
-
-    // It's probably stupid. Maybe we should skip it?
-    testWidgets('I guess works????????', (t) async {
-      Widget? wrapped;
-      final themeKey = GlobalKey();
-      final widget = MaterialApp(
-        home: WeekdaySelectorTheme(
-          key: themeKey,
-          data: buildThemeData(Colors.green),
-          child: WeekdaySelectorTheme(
-            data: buildThemeData(Colors.red),
-            child: Builder(
-              builder: (context) {
-                return TextButton(
-                  child: Text('Tap me'),
-                  onPressed: () {
-                    final WeekdaySelectorTheme typedTheme =
-                        themeKey.currentWidget as WeekdaySelectorTheme;
-                    wrapped = typedTheme.wrap(context, Text('Wrapped!'));
-                  },
-                );
-              },
-            ),
-          ),
-        ),
-      );
-      await t.pumpWidget(widget);
-      final buttonFinder = find.text('Tap me');
-      expect(buttonFinder, findsOneWidget);
-      await t.tap(buttonFinder);
-
-      expect(wrapped, isNot(null));
-      await t.pumpWidget(MaterialApp(home: wrapped));
-      expect(find.text('Wrapped!'), findsOneWidget);
-      final themeFinder = find.byType(WeekdaySelectorTheme);
-      expect(themeFinder, findsOneWidget);
-      final WeekdaySelectorTheme theme =
-          themeFinder.evaluate().first.widget as WeekdaySelectorTheme;
-      expect(theme.data.color, Colors.green);
-    });
-  });
-}
-
-WeekdaySelectorThemeData buildThemeData([Color? color]) {
-  return WeekdaySelectorThemeData(
-    enableFeedback: true,
-    color: color ?? Colors.red,
-    selectedColor: Colors.blue,
-    disabledColor: Colors.green,
-    fillColor: Colors.yellow,
-    elevation: 1,
-    selectedElevation: 2,
-    disabledElevation: 3,
-  );
 }

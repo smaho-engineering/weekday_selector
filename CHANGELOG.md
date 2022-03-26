@@ -1,3 +1,13 @@
+## 1.1.0
+
+Minor improvements, such as
+* Make `WeekdaySelector` stateless (it had no reason to be stateful to begin with)
+* Add assertion to make sure that displayed days are in a valid format
+
+## 1.0.0
+
+Stable release with null safety.
+
 ## 1.0.0-nullsafety.0
 
 Migrate to null-safety.

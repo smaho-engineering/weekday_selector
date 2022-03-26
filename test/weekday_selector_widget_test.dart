@@ -65,13 +65,13 @@ void main() {
 
   group('$WeekdaySelector with simple default values', () {
     late Widget widget;
-    List<int>? changed;
+    late List<int> changed;
 
     setUp(() {
       changed = [];
       widget = MaterialApp(
         home: WeekdaySelector(
-          onChanged: changed!.add,
+          onChanged: changed.add,
           values: const [true, false, false, false, false, false, true],
         ),
       );
@@ -154,7 +154,7 @@ void main() {
 
   group('$WeekdaySelector with only the subset of the days displayed', () {
     late Widget widget;
-    List<int> changed;
+    late List<int> changed;
 
     setUp(() {
       changed = [];
@@ -213,13 +213,24 @@ void main() {
         );
       },
     );
+
+    testWidgets(
+      'calls the onChanged method with the day index on tap',
+      (t) async {
+        await t.pumpWidget(widget);
+        await t.tap(find.byTooltip('Sunday'));
+        expect(changed, [7]);
+        await t.tap(find.byTooltip('Monday'));
+        expect(changed, [7, 1]);
+      },
+    );
   });
 
   group(
       '$WeekdaySelector with custom weekdays, tooltips and first day of '
       'the week from the intl package (Mexico)', () {
     late Widget widget;
-    List<int>? changed;
+    late List<int> changed;
 
     setUp(() {
       changed = [];
@@ -230,7 +241,7 @@ void main() {
       const firstDayOfWeekDateTime = firstDayOfWeekIntl + 1;
       widget = MaterialApp(
           home: WeekdaySelector(
-        onChanged: changed!.add,
+        onChanged: changed.add,
         values: const [true, false, false, false, false, false, true],
         weekdays: const [
           'domingo',

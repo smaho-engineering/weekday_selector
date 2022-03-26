@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'weekday_selector_theme.dart';
@@ -33,7 +34,7 @@ const defaultShortWeekdays = <String>[
 /// The value we use for the first day of the week if the value is omitted.
 ///
 /// The default value corresponds to the value of
-/// dateTimeSymbolMap()['en_ISO].FIRSTDAYOFWEEK + 1.
+/// `dateTimeSymbolMap()['en_ISO'].FIRSTDAYOFWEEK + 1`.
 const defaultFirstDayOfWeek = 1;
 
 const defaultTextDirection = TextDirection.ltr;
@@ -55,7 +56,7 @@ const defaultDisplayedDays = {
 /// the user select some of these weekdays.
 ///
 /// Requires one of its ancestors to be a [Material] widget.
-class WeekdaySelector extends StatefulWidget {
+class WeekdaySelector extends StatelessWidget {
   WeekdaySelector({
     Key? key,
     required this.onChanged,
@@ -90,6 +91,7 @@ class WeekdaySelector extends StatefulWidget {
   })  : assert(values.length == 7),
         assert(shortWeekdays.length == 7),
         assert(weekdays.length == 7),
+        assert(displayedDays.every(defaultDisplayedDays.contains)),
         super(key: key);
 
   /// Very short names for days of the week, starting with Sunday, e.g. 'S'.
@@ -112,13 +114,17 @@ class WeekdaySelector extends StatefulWidget {
 
   /// Which days are rendered in the weekday selector.
   ///
-  /// By default, all days are displayed.
+  /// By default, all days are displayed: [defaultDisplayedDays].
   final Set<int> displayedDays;
 
-  /// The first day of the week, in ISO 8601 style, where the first day of the
-  /// week, i.e. index 0, is Monday.
+  /// The first day of the week, i.e. index 1 is Monday
+  /// ([DateTime.monday]'s value is 1).
   ///
-  /// If omitted, [defaultFirstDayOfWeek] is used (en_ISO).
+  /// Make sure to correct between ISO 8601 days and Dart const days. For more
+  /// information, see the package README's
+  /// ["First day of week" section](https://github.com/smaho-engineering/weekday_selector#first-day-of-week).
+  ///
+  /// If omitted, [defaultFirstDayOfWeek] is used (en_ISO, Monday).
   final int firstDayOfWeek;
 
   /// The text direction to be used when creating the day buttons.
@@ -230,18 +236,14 @@ class WeekdaySelector extends StatefulWidget {
   /// Called when the user taps on a day.
   ///
   /// The selector passes the day value as per the [DateTime] weekday constants
-  /// to the callback.
+  /// to the callback: [DateTime.monday] is 1, [DateTime.tuesday] is 2, ..., and
+  /// [DateTime.sunday] is 7.
   ///
   /// The callback provided to [onChanged] could update the state of the parent
   /// [StatefulWidget[ using the [State.setState] method (or use your favorite
   /// state management library) so that the parent gets rebuilt.
   final ValueChanged<int>? onChanged;
 
-  @override
-  _WeekdaySelectorState createState() => _WeekdaySelectorState();
-}
-
-class _WeekdaySelectorState extends State<WeekdaySelector> {
   Widget buildButtonWith(int value) {
     // In the arrays, element at index 0 correspond to Sunday...
     final arrayIndex = value % 7;
@@ -249,46 +251,45 @@ class _WeekdaySelectorState extends State<WeekdaySelector> {
     // the DateTime.monday, ..., DateTime.sunday constants.
     final dateTimeDay = arrayIndex == 0 ? DateTime.sunday : arrayIndex;
     return WeekdayButton(
-      text: widget.shortWeekdays[arrayIndex],
-      selected: widget.values[arrayIndex],
-      tooltip: widget.weekdays[arrayIndex],
-      onPressed: widget.values[arrayIndex] == null
-          ? null
-          : () => widget.onChanged!(dateTimeDay),
-      enableFeedback: widget.enableFeedback,
-      color: widget.color,
-      selectedColor: widget.selectedColor,
-      disabledColor: widget.disabledColor,
-      fillColor: widget.fillColor,
-      selectedFillColor: widget.selectedFillColor,
-      disabledFillColor: widget.disabledFillColor,
-      elevation: widget.elevation,
-      selectedElevation: widget.selectedElevation,
-      disabledElevation: widget.disabledElevation,
-      focusColor: widget.focusColor,
-      selectedFocusColor: widget.selectedFocusColor,
-      hoverColor: widget.hoverColor,
-      selectedHoverColor: widget.selectedHoverColor,
-      splashColor: widget.splashColor,
-      selectedSplashColor: widget.selectedSplashColor,
-      textStyle: widget.textStyle,
-      selectedTextStyle: widget.selectedTextStyle,
-      disabledTextStyle: widget.disabledTextStyle,
-      shape: widget.shape,
-      selectedShape: widget.selectedShape,
-      disabledShape: widget.disabledShape,
+      text: shortWeekdays[arrayIndex],
+      selected: values[arrayIndex],
+      tooltip: weekdays[arrayIndex],
+      onPressed:
+          values[arrayIndex] == null ? null : () => onChanged!(dateTimeDay),
+      enableFeedback: enableFeedback,
+      color: color,
+      selectedColor: selectedColor,
+      disabledColor: disabledColor,
+      fillColor: fillColor,
+      selectedFillColor: selectedFillColor,
+      disabledFillColor: disabledFillColor,
+      elevation: elevation,
+      selectedElevation: selectedElevation,
+      disabledElevation: disabledElevation,
+      focusColor: focusColor,
+      selectedFocusColor: selectedFocusColor,
+      hoverColor: hoverColor,
+      selectedHoverColor: selectedHoverColor,
+      splashColor: splashColor,
+      selectedSplashColor: selectedSplashColor,
+      textStyle: textStyle,
+      selectedTextStyle: selectedTextStyle,
+      disabledTextStyle: disabledTextStyle,
+      shape: shape,
+      selectedShape: selectedShape,
+      disabledShape: disabledShape,
     );
   }
 
   @override
   Widget build(BuildContext context) {
     const days = [0, 1, 2, 3, 4, 5, 6];
-    final displayedIndices = widget.displayedDays.map((e) => e % 7);
+    final displayedIndices = displayedDays.map((e) => e % 7);
     return Row(
-      textDirection: widget.textDirection,
+      textDirection: textDirection,
       children: days
           .where((d) => displayedIndices.contains(d))
-          .map((i) => i + widget.firstDayOfWeek)
+          .map((i) => i + firstDayOfWeek)
           .map(buildButtonWith)
           .toList(),
     );
