@@ -88,6 +88,7 @@ class WeekdaySelector extends StatelessWidget {
     this.shape,
     this.selectedShape,
     this.disabledShape,
+    this.semanticsWrapper,
   })  : assert(values.length == 7),
         assert(shortWeekdays.length == 7),
         assert(weekdays.length == 7),
@@ -244,6 +245,20 @@ class WeekdaySelector extends StatelessWidget {
   /// state management library) so that the parent gets rebuilt.
   final ValueChanged<int>? onChanged;
 
+  /// Provides a wrapper around the weekday buttons for improving accessibility.
+  ///
+  /// For more info, check [WeekdayButton]'s `semanticsWrapper` field.
+  final WeekdayButtonSemanticsWrapper? semanticsWrapper;
+
+  static Widget checkbox(Widget weekdayButton, bool? selected, String label) {
+    return Semantics(
+      checked: selected,
+      label: label,
+      tooltip: label,
+      child: weekdayButton,
+    );
+  }
+
   Widget buildButtonWith(int value) {
     // In the arrays, element at index 0 correspond to Sunday...
     final arrayIndex = value % 7;
@@ -278,6 +293,7 @@ class WeekdaySelector extends StatelessWidget {
       shape: shape,
       selectedShape: selectedShape,
       disabledShape: disabledShape,
+      semanticsWrapper: semanticsWrapper,
     );
   }
 
@@ -288,13 +304,22 @@ class WeekdaySelector extends StatelessWidget {
     return Row(
       textDirection: textDirection,
       children: days
-          .where((d) => displayedIndices.contains(d))
+          .where(displayedIndices.contains)
           .map((i) => i + firstDayOfWeek)
           .map(buildButtonWith)
           .toList(),
     );
   }
 }
+
+/// Function signature for wrapping individual weekday buttons.
+typedef WeekdayButtonSemanticsWrapper = Widget Function(
+  BuildContext context,
+  String label,
+  bool? selected,
+  VoidCallback? onPressed,
+  Widget child,
+);
 
 /// A single button that holds a weekday.
 ///
@@ -331,6 +356,7 @@ class WeekdayButton extends StatelessWidget {
     this.shape,
     this.selectedShape,
     this.disabledShape,
+    this.semanticsWrapper,
   })  : assert(text.length != 0),
         assert(tooltip.length != 0),
         super(key: key);
@@ -437,6 +463,75 @@ class WeekdayButton extends StatelessWidget {
   /// The shape of the disabled day button's [Material].
   final ShapeBorder? disabledShape;
 
+  /// Provides a wrapper around the weekday buttons for improving accessibility.
+  ///
+  /// See [WeekdayButton.checkboxSemanticsWrapper],
+  /// [WeekdayButton.radioSemanticsWrapper] and
+  /// [WeekdayButton.tooltipWrapper] for examples.
+  ///
+  /// If these examples don't match your use case, you can create your own.
+  /// See [WeekdayButtonSemanticsWrapper] for more info.
+  ///
+  /// If omitted, defaults to [WeekdayButton.tooltipWrapper].
+  final WeekdayButtonSemanticsWrapper? semanticsWrapper;
+
+  static WeekdayButtonSemanticsWrapper checkboxSemanticsWrapper = (
+    BuildContext context,
+    String label,
+    bool? selected,
+    VoidCallback? onPressed,
+    Widget child,
+  ) {
+    return Semantics(
+      label: label,
+      checked: selected,
+      enabled: onPressed != null,
+      onTap: onPressed,
+      inMutuallyExclusiveGroup: false,
+      child: Tooltip(
+        message: label,
+        child: ExcludeSemantics(
+          child: child,
+        ),
+      ),
+    );
+  };
+
+  static WeekdayButtonSemanticsWrapper radioSemanticsWrapper = (
+    BuildContext context,
+    String label,
+    bool? selected,
+    VoidCallback? onPressed,
+    Widget child,
+  ) {
+    return Semantics(
+      label: label,
+      checked: selected,
+      enabled: onPressed != null,
+      onTap: onPressed,
+      inMutuallyExclusiveGroup: true,
+      child: Tooltip(
+        message: label,
+        child: ExcludeSemantics(
+          child: child,
+        ),
+      ),
+    );
+  };
+
+  static WeekdayButtonSemanticsWrapper tooltipWrapper = (
+    BuildContext context,
+    String label,
+    bool? selected,
+    VoidCallback? onPressed,
+    Widget child,
+  ) {
+    return Tooltip(
+      message: label,
+      child: child,
+    );
+  };
+
   @override
   Widget build(BuildContext context) {
     Color currentColor;
@@ -512,10 +607,16 @@ class WeekdayButton extends StatelessWidget {
           theme.textTheme.bodyText2!.copyWith(color: currentColor);
     }
 
+    final semanticsWrapper = this.semanticsWrapper ?? tooltipWrapper;
+    final label = tooltip;
+
     return Expanded(
-      child: Tooltip(
-        message: tooltip,
-        child: RawMaterialButton(
+      child: semanticsWrapper(
+        context,
+        label,
+        selected,
+        onPressed,
+        RawMaterialButton(
           textStyle: currentTextStyle,
           elevation: currentElevation ?? 0.0,
           disabledElevation: currentDisabledElevation ?? 0.0,

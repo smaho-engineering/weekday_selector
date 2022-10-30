@@ -1,8 +1,12 @@
+## 1.2.0
+
+Accessibility improvements
+
 ## 1.1.0
 
-Minor improvements, such as
-* Make `WeekdaySelector` stateless (it had no reason to be stateful to begin with)
-* Add assertion to make sure that displayed days are in a valid format
+Minor improvements, such as:
+* Make `WeekdaySelector` stateless (it had no reason to be stateful to begin with).
+* Add assertion to make sure that displayed days are in a valid format.
 
 ## 1.0.0
 
@@ -14,9 +18,9 @@ Migrate to null-safety.
 
 ## 0.4.0
 
-Remove `DiagnosticableMixin` and use the `Diagnosticable` mixin. [`#2`](https://github.com/smaho-engineering/weekday_selector/pull/2)
+Remove `DiagnosticableMixin` and use the `Diagnosticable` mixin. [`#2`](https://github.com/smaho-engineering/weekday_selector/pull/2).
 
-Remove enormous example videos from the repository, use hashed URLs. For more info, see: [`pub-dev #3849`](https://github.com/dart-lang/pub-dev/issues/3849) 
+Remove enormous example videos from the repository, use hashed URLs. For more info, see: [`pub-dev #3849`](https://github.com/dart-lang/pub-dev/issues/3849).
 
 ## 0.3.1
 

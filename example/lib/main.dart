@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/date_symbols.dart';
@@ -83,8 +84,10 @@ class _MyAppState extends State<MyApp> {
     locales = dateTimeSymbolMap()
         .keys
         .cast<String>()
-        .map((String k) => Locale(
-            k.split('_')[0], k.split('_').length > 1 ? k.split('_')[1] : null))
+        .map((k) => Locale(
+              k.split('_')[0],
+              k.split('_').length > 1 ? k.split('_')[1] : null,
+            ))
         .toList();
     super.initState();
   }
@@ -113,7 +116,8 @@ class UsageExamples extends StatelessWidget {
     initializeDateFormatting();
     final examples = <Widget>[
       SimpleExampleWeekendsStatic(),
-      SelectedDaysUpdateExample(),
+      CheckboxLikeExample(),
+      RadioLikeExample(),
       DisabledExample(),
       DisplayedDaysExample(),
       // TODO: use with setstate
@@ -202,7 +206,7 @@ printIntAsDay(int day) {
 
 String intDayToEnglish(int day) {
   if (day % 7 == DateTime.monday % 7) return 'Monday';
-  if (day % 7 == DateTime.tuesday % 7) return 'Tueday';
+  if (day % 7 == DateTime.tuesday % 7) return 'Tuesday';
   if (day % 7 == DateTime.wednesday % 7) return 'Wednesday';
   if (day % 7 == DateTime.thursday % 7) return 'Thursday';
   if (day % 7 == DateTime.friday % 7) return 'Friday';
@@ -260,6 +264,10 @@ class _SimpleExampleWeekendsStaticState
           // We display the last tapped value in the example app
           onChanged: (v) {
             printIntAsDay(v);
+            SemanticsService.announce(
+              'onChanged callback was last called with $v',
+              TextDirection.ltr,
+            );
             setState(() => lastTapped = v);
           },
           values: [
@@ -311,13 +319,12 @@ class _DisabledExampleState extends State<DisabledExample> {
   }
 }
 
-class SelectedDaysUpdateExample extends StatefulWidget {
+class CheckboxLikeExample extends StatefulWidget {
   @override
-  _SelectedDaysUpdateExampleState createState() =>
-      _SelectedDaysUpdateExampleState();
+  _CheckboxLikeExampleState createState() => _CheckboxLikeExampleState();
 }
 
-class _SelectedDaysUpdateExampleState extends State<SelectedDaysUpdateExample> {
+class _CheckboxLikeExampleState extends State<CheckboxLikeExample> {
   final values = List.filled(7, false);
 
   @override
@@ -325,12 +332,16 @@ class _SelectedDaysUpdateExampleState extends State<SelectedDaysUpdateExample> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        ExampleTitle('Stateful widget with selected days'),
+        ExampleTitle('Checkbox-like weekday selector'),
         Text(
-            'When the user taps on a day, toggle the state! You can use stateful widgets, or any other methods for managing your state.'),
+          'When the user taps on a day, toggle the state! '
+          'You can use stateful widgets, or any other methods for managing your state.',
+        ),
         // Using v == true, as some values could be null!
         Text(
-            'The days that are currently selected are: ${valuesToEnglishDays(values, true)}.'),
+          'The days that are currently selected are: '
+          '${valuesToEnglishDays(values, true)}.',
+        ),
         WeekdaySelector(
           selectedFillColor: Colors.indigo,
           onChanged: (v) {
@@ -340,6 +351,44 @@ class _SelectedDaysUpdateExampleState extends State<SelectedDaysUpdateExample> {
             });
           },
           values: values,
+          semanticsWrapper: WeekdayButton.checkboxSemanticsWrapper,
+        ),
+      ],
+    );
+  }
+}
+
+class RadioLikeExample extends StatefulWidget {
+  @override
+  _RadioLikeExampleState createState() => _RadioLikeExampleState();
+}
+
+class _RadioLikeExampleState extends State<RadioLikeExample> {
+  var values = List.filled(7, false);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        ExampleTitle('Radio-like weekday selector'),
+        Text('When the user taps on a day, select that day.'),
+        // Using v == true, as some values could be null!
+        Text(
+          'Currently selected day:'
+          '${valuesToEnglishDays(values, true)}.',
+        ),
+        WeekdaySelector(
+          selectedFillColor: Colors.blue,
+          onChanged: (v) {
+            printIntAsDay(v);
+            setState(() {
+              values = List.filled(7, false);
+              values[v % 7] = true;
+            });
+          },
+          values: values,
+          semanticsWrapper: WeekdayButton.radioSemanticsWrapper,
         ),
       ],
     );
