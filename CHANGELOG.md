@@ -1,3 +1,7 @@
+## 1.2.0
+
+Accessibility improvements
+
 ## 1.1.0
 
 Minor improvements, such as:
